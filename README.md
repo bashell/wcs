@@ -1,2 +1,2 @@
-# wrs
-a word retrieval system
+# wcs
+a word correction system

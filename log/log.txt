@@ -1,0 +1,7 @@
+Server is start.
+aaaaa
+aaaab
+aaaac
+aaaad
+aaaae
+Server is closed.
