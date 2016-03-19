@@ -1,7 +1,157 @@
 Server is start.
-aaaaa
-aaaab
-aaaac
-aaaad
-aaaae
-Server is closed.
+Client 127.0.0.1:45165 is online.
+
+Get a cache for computing.
+
+One pair is add to cache: nihao -> that
+
+Get a cache for computing.
+
+One pair is add to cache: 你好啊 -> 你好
+
+Give back a cache.
+
+Get a cache for computing.
+
+Give back a cache.
+
+Give back a cache.
+
+Get a cache for computing.
+
+Give back a cache.
+
+One pair is add to cache: 无额不作 -> 无恶不作
+
+Get a cache for computing.
+
+Get a cache for computing.
+
+Give back a cache.
+
+One pair is add to cache: 为锁欲为 -> 为
+
+Give back a cache.
+
+Get a cache for computing.
+
+One pair is add to cache: 为锁欲为 -> 为
+
+Give back a cache.
+
+Get a cache for computing.
+
+Get a cache for computing.
+
+Give back a cache.
+
+Get a cache for computing.
+
+Give back a cache.
+
+Give back a cache.
+
+Get a cache for computing.
+
+Give back a cache.
+
+Get a cache for computing.
+
+Give back a cache.
+
+Get a cache for computing.
+
+One pair is add to cache: niec -> die
+
+Give back a cache.
+
+Get a cache for computing.
+
+One pair is add to cache: nicc -> nigh
+
+Give back a cache.
+
+Get a cache for computing.
+
+One pair is add to cache: niee -> nine
+
+Give back a cache.
+
+Get a cache for computing.
+
+Give back a cache.
+
+Get a cache for computing.
+
+One pair is add to cache: queee -> queen
+
+Give back a cache.
+
+Get a cache for computing.
+
+One pair is add to cache: quenn -> queen
+
+Give back a cache.
+
+Get a cache for computing.
+
+One pair is add to cache: abc -> and
+
+Get a cache for computing.
+
+Give back a cache.
+
+One pair is add to cache: anf -> and
+
+Give back a cache.
+
+Get a cache for computing.
+
+Give back a cache.
+
+Get a cache for computing.
+
+One pair is add to cache: notf -> not
+
+Give back a cache.
+
+Get a cache for computing.
+
+Give back a cache.
+
+Get a cache for computing.
+
+One pair is add to cache: ladi -> had
+
+Give back a cache.
+
+Get a cache for computing.
+
+One pair is add to cache: hadr -> had
+
+Get a cache for computing.
+
+Give back a cache.
+
+Give back a cache.
+
+Get a cache for computing.
+
+One pair is add to cache: 金庸以 -> 金庸
+
+Get a cache for computing.
+
+One pair is add to cache: 进庸 -> 进来
+
+Give back a cache.
+
+Give back a cache.
+
+Get a cache for computing.
+
+Give back a cache.
+
+Get a cache for computing.
+
+Client 127.0.0.1:45165 is offline.
+
