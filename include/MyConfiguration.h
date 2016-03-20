@@ -5,7 +5,9 @@
 #include <pthread.h>
 #include <stdlib.h>  // atexit, atoi
 
-
+/*
+ * 单例模式读取配置文件
+ */
 class Configuration {
  public:
   static Configuration *getInstance() {
@@ -49,7 +51,6 @@ class Configuration {
   int cache_num_;
   int update_frequence_;
 };
-
 
 
 #endif  /* _MY_CONFIGURATION_H_ */

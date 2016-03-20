@@ -5,30 +5,22 @@
 #include <unordered_map>
 #include <list>
 
-#define DEFAULT_CACHE_SIZE 100
+#define DEFAULT_CACHE_SIZE 2048
 
 class Cache {
  public:
   Cache();
   Cache(size_t sz);
   ~Cache();
+
   void readCacheFile(const std::string &filename);
   void writeCacheFile(const std::string &filename);
-  const std::string takeFromCache(const std::string &key);
+ 
   void putIntoCache(const std::string &key, const std::string &val);
-
   std::unordered_map<std::string, std::string> &getCacheRef();
-  //void setIndex(size_t index);
-  //size_t getIndex();
-
- //private:
- // Cache(const Cache&) = delete;
- // Cache &operator=(const Cache&) = delete;
 
  private:
-  std::unordered_map<std::string, std::string> cache_;
-  std::list<std::string> lru_;
-  //size_t index_;
+  std::unordered_map<std::string, std::string> cache_;  // 缓存
   size_t maxSize_;
 };
 

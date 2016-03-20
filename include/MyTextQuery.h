@@ -16,11 +16,21 @@ class TextQuery {
   TextQuery &operator=(const TextQuery&) = delete;
 
  private:
-  // flag = 0时，读取英文词库
-  // flag = 1时，读取中文词库
+  /*
+   * flag = 0时，读取英文词库
+   * flag = 1时，读取中文词库
+   */
   void readFile(int flag);
  
  private:
+  /*
+     struct Word {
+       word_;
+       distance_;
+       frequency_;
+       operator<() {...}
+     };
+  */
   std::unordered_map<std::string, Word> dict_;  //  词库
   const std::string enDict_;
   const std::string chDict_;

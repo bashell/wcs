@@ -10,8 +10,6 @@ Log::Log(const std::string &logFile)
       cond_(mutex_),
       thread_(std::bind(&Log::run, this))
 {
-  thread_.start();
-  isStarted_ = true;
 }
 
 
@@ -36,13 +34,15 @@ void Log::stop() {
 }
 
 
+// 添加日志 (producer)
 void Log::addLog(const std::string &s) {
   MutexLockGuard lock(mutex_);
   queue_.push(s);
-  cond_.signal_one();  // 通知线程日志到来
+  cond_.signal_one();
 }
 
 
+// 获取日志 (consumer)
 std::string Log::getLog() {
   MutexLockGuard lock(mutex_);
   while(queue_.empty() && isStarted_)

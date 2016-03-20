@@ -48,27 +48,10 @@ void Cache::writeCacheFile(const std::string &filename) {
 }
 
 
-
-const std::string Cache::takeFromCache(const std::string &key) {
-  std::string res("");
-  auto iter = cache_.find(key);
-  if(iter != cache_.end()) {
-    res = iter->second;
-    auto iter_list = std::find(lru_.begin(), lru_.end(), key);
-    lru_.erase(iter_list);
-    lru_.push_front(key);  // 最近访问元素的放在list的开头位置
-  }
-  return res;
-}
-
-
-
-
 void Cache::putIntoCache(const std::string &key, const std::string &val) {
+  if(cache_.size() >= maxSize_)  // 缓存满了就清空
+    cache_.erase(cache_.begin(), cache_.end());
   cache_.insert(std::make_pair(key, val));
-  if(lru_.size() >= maxSize_)
-    lru_.pop_back();
-  lru_.push_front(key);
 }
 
 
@@ -76,13 +59,3 @@ std::unordered_map<std::string, std::string> &Cache::getCacheRef() {
   return cache_;
 }
 
-/*
-void Cache::setIndex(size_t index) {
-  index_ = index;
-}
-
-
-size_t Cache::getIndex() {
-  return index_;
-}
-*/

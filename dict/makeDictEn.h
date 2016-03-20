@@ -19,7 +19,6 @@ class MakeDictEn {
   std::ofstream &openFileWrite(std::ofstream &os, const std::string &filename);
 
  private:
-  //std::map<std::string, size_t> words_;
   std::unordered_map<std::string, size_t> words_;  // 词典
   //std::unordered_set<std::string> exclude_;        // 停止词
 };

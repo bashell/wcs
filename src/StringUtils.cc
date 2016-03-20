@@ -22,6 +22,7 @@ std::ofstream &stringutils::openWrite(std::ofstream &os, const std::string &file
   return os;
 }
 
+
 /*
  * utf-8编码所占字节数
  * cnt_one = 0 ---> 1
@@ -38,7 +39,8 @@ inline int stringutils::utf8Len(char c) {
 
 
 /*
- * 将utf-8转为uint32_t存储
+ * utf-8 ---> uint32_t
+ *
  * 例如,若string s = "严肃", 则s中各成员的unsigned char版本对应的十六进制分别为: 
  * s[0] = e4, s[1] = b8, s[2] = a5, s[3] = e8, s[4] = 82, s[5] = 83
  * '严'的utf-8编码(十六进制)为 e4b8a5
@@ -104,6 +106,6 @@ int stringutils::editDistance(const std::string &s1, const std::string &s2) {
 void stringutils::trimSpace(std::string &word) {
   char tmp[1024] = {0};
   ::strcpy(tmp, word.c_str());
-  tmp[::strlen(tmp)-1] = '\0';
+  tmp[::strlen(tmp)-1] = '\0';  // 去掉行尾\n
   word = static_cast<std::string>(tmp);
 }

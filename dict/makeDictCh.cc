@@ -39,8 +39,8 @@ void MakeDictCh::readFile(const std::string &filename) {
     std::cerr << "Can't open: " + filename << std::endl;
   while(getline(in, line)) {
     std::vector<std::string> words;
-    segment_.Cut(line, words);
-    for(const auto &wd : words)
+    segment_.Cut(line, words);   // 切词
+    for(const auto &wd : words)  // 构建词典
       ++words_[wd];
   }
   in.close();

@@ -3,7 +3,6 @@
 #include <sstream>
 #include <queue>
 #include <set>
-#include <unistd.h>
 #include "MyTextQuery.h"
 #include "StringUtils.h"
 
@@ -29,7 +28,7 @@ void TextQuery::readFile(int flag) {
     iss >> str >> freq;
     Word wd;
     wd.word_ = str;
-    wd.distance_ = 20;
+    wd.distance_ = 20;  // 默认为20
     wd.frequency_ = freq;
     dict_.insert(std::make_pair(str, wd));
   }
@@ -39,27 +38,24 @@ void TextQuery::readFile(int flag) {
 
 
 std::string TextQuery::query(const std::string &input) {
-  std::priority_queue<Word> pq;
+  std::priority_queue<Word> pq;  // 优先级队列, 一次查询有效
   // 若在词库中, 直接返回
   std::cout << input << std::endl;
-  auto iter = dict_.find(input);
-  if(iter != dict_.end()) {
-    //std::cout << "yes" << std::endl;
-    //std::cout << input << " " << iter->second.word_ << std::endl;
-    //sleep(1);
+  if(dict_.find(input) != dict_.end()) {
     return input;
   }
-  // 否则进行计算
+
+  // 否则找最相近的
   std::set<Word> range_set;
-  index_.getRange(input, range_set);
+  index_.getRange(input, range_set);  // 根据输入单词得出索引范围
   for(auto iter = range_set.begin(); iter != range_set.end(); ++iter) {
     Word wd = *iter;
     wd.distance_ = stringutils::editDistance(input, iter->word_);
-    if(wd.distance_ < 4)
+    if(wd.distance_ <= 3)  // 仅将编辑距离不大于3的单词加入pq
       pq.push(wd);
   }
   std::string res;
-  // 优先级队列中的第一个元素即为最匹配的元素
+  // pq队首元素最为匹配
   if(!pq.empty())
     res = pq.top().word_;
   else

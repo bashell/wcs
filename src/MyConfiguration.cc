@@ -3,8 +3,10 @@
 #include "MyConfiguration.h"
 #include "StringUtils.h"
 
+
 Configuration *Configuration::pInstance_ = nullptr;
 pthread_once_t Configuration::once_ = PTHREAD_ONCE_INIT;
+
 
 void Configuration::readConf(const std::string &filename) {
   std::ifstream in;
@@ -18,7 +20,6 @@ void Configuration::readConf(const std::string &filename) {
     std::string::size_type pos = line.find("=");
     type = line.substr(0, pos);
     content = line.substr(pos + 1);
-    //std::cout << type << ", " << content << std::endl;
     if(type == "port")
       port_ = ::atoi(content.c_str());
     else if(type == "logFile")

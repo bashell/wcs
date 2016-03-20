@@ -40,21 +40,19 @@ void MakeDictEn::readFile(const std::string &filename) {
     std::cerr << "Can't open: " + filename << std::endl;
   while(getline(in, line)) {
     for(size_t i = 0; i != line.size(); ++i) {
-      if(ispunct(line[i]) || isdigit(line[i]))
+      if(ispunct(line[i]) || isdigit(line[i]))  // 数字和标点符号转换成空格
         line[i] = 32;
-      else if(isupper(line[i]))
+      else if(isupper(line[i]))  // 小写变大写
         line[i] += 32;
     }
     std::istringstream iss(line);
     std::string word;
-    while(iss >> word)
+    while(iss >> word)  // 构建词典
       ++words_[word];
   }
   in.close();
   in.clear();
 }
-
-
 
 void MakeDictEn::writeFile(const std::string &filename) {
   std::ofstream out;
@@ -79,3 +77,4 @@ std::ofstream &MakeDictEn::openFileWrite(std::ofstream &os, const std::string &f
   os.open(filename.c_str());
   return os;
 }
+

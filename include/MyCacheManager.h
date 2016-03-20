@@ -17,12 +17,9 @@ class CacheManager {
 
   void start();
   void stop();
-
-  Cache getCacheCopy();
+  Cache getCacheCopy();  // 申请cache
   void giveBackCache();  // 归还cache
-
   void writeToFile();
-  void updateCache();
 
   Cache *getGlobalCache() { return &global_cache_; }
 
@@ -31,20 +28,15 @@ class CacheManager {
   CacheManager &operator=(const CacheManager&) = delete;
 
  private:
-  std::string cache_file_;     // cache文件
-  size_t cache_sz_;            // 缓存池大小
-  bool isStarted_;             // 缓存池开启标志
-  Cache global_cache_;         // 全局cache
-  std::queue<Cache> caches_;   // 缓存池
-
-  //std::vector<Cache> caches_;  // 缓存池
-  //std::vector<size_t> flags_;  // 标记每个cache是否开启
-  //std::queue<size_t> queue_;
-  
+  std::string cache_file_;    // cache文件
+  size_t cache_sz_;           // 缓存池大小
+  bool isStarted_;            // 缓存池开启标志
+  Cache global_cache_;        // 全局cache
+  std::queue<Cache> caches_;  // 缓存池
   mutable MutexLock mutex_;
   Condition empty_;
   Condition full_;
-  TimerThread timer_;  // 定时器, 定时刷新缓存池, 并将最新的缓存池内容写入磁盘
+  TimerThread timer_;         // 定时器, 定时将全局cache内容回写磁盘文件
 };
 
 

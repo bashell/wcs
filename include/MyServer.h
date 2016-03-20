@@ -3,13 +3,13 @@
 
 #include <vector>
 #include <string>
-#include "TcpServer.h"
-#include "ThreadPool.h"
-#include "InetAddress.h"
 #include "MyConfiguration.h"
 #include "MyLog.h"
 #include "MyCacheManager.h"
 #include "MyTextQuery.h"
+#include "ThreadPool.h"
+#include "InetAddress.h"
+#include "TcpServer.h"
 
 
 class Server {
@@ -19,7 +19,6 @@ class Server {
 
   void start();
 
-  //Log *getLog() { return &log_; }
  private:
   Server(const Server&) = delete;
   Server &operator=(const Server&) = delete;
@@ -31,11 +30,11 @@ class Server {
   
  private:
   InetAddress addr_;
-  TcpServer server_;
-  TextQuery search_;
-  CacheManager caches_;
-  ThreadPool pool_;
-  Log log_;
+  TcpServer server_;     // 服务器
+  TextQuery search_;     // 查询
+  CacheManager caches_;  // 缓存池
+  ThreadPool pool_;      // 线程池
+  Log log_;              // 日志
 };
 
 #endif  /* _MY_SERVER_H_ */
