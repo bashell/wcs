@@ -1,3 +1,5 @@
+.PHONY : submake clean
+
 BIN = server
 INSTALL_PATH = ./bin
 TARGET = $(INSTALL_PATH)/$(BIN)
@@ -15,14 +17,6 @@ CXX = g++
 CXXFLAGES = -Wall -g -std=c++11
 RM = rm -rf
 
-.PHONY : all clean
-
-#all:submake $(TARGET)
-
-#submake:
-#	make -C ./echo/
-#	make -C ./en_dict/
-#	make -C ./ch_dict/
 
 $(TARGET):$(OBJS)
 	$(CXX) -o $(TARGET) $(OBJS) $(LIBS) $(LIBDIRS)
@@ -31,8 +25,12 @@ $(OBJ_PATH)/%.o:%.cc
 	$(CXX) $(CXXFLAGES) $(INCLUDES) -c $^ -o $@
 
 
-#clean:
-#	$(RM) $(INSTALL_PATH)/$(BIN)
-#	$(RM) $(wildcard $(OBJ_DIR)/*)
-#	make -C ./en_dict/ clean
-#	make -C ./ch_dict/ clean
+submake:
+	make -C ./rtp/
+	make -C ./dict/
+
+clean:
+	$(RM) $(INSTALL_PATH)/$(BIN)
+	$(RM) $(wildcard $(OBJ_DIR)/*)
+	make -C ./rtp/ clean
+	make -C ./dict/ clean
