@@ -40,7 +40,7 @@ void TextQuery::readFile(int flag) {
 std::string TextQuery::query(const std::string &input) {
   std::priority_queue<Word> pq;  // 优先级队列, 一次查询有效
   // 若在词库中, 直接返回
-  std::cout << input << std::endl;
+  //std::cout << input << std::endl;
   if(dict_.find(input) != dict_.end()) {
     return input;
   }

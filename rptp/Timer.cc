@@ -28,8 +28,8 @@ Timer::~Timer() {
 
 
 void Timer::setTime(int value, int interval) {
-  howlong_.it_value.tv_sec = value;
-  howlong_.it_interval.tv_sec = interval;
+  howlong_.it_value.tv_sec = value;        // 初始超时时间
+  howlong_.it_interval.tv_sec = interval;  // 之后的超时时间
 }
 
 

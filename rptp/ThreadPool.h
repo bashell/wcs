@@ -45,7 +45,6 @@ class ThreadPool {
 };
 
 
-
 inline ThreadPool::ThreadPool()
     : empty_(mutex_),
       full_(mutex_),
@@ -54,7 +53,6 @@ inline ThreadPool::ThreadPool()
       isStarted_(false)
 {
 }
-
 
 
 inline ThreadPool::ThreadPool(size_t queueSize, size_t poolSize)
@@ -67,12 +65,10 @@ inline ThreadPool::ThreadPool(size_t queueSize, size_t poolSize)
 }
 
 
-
 inline ThreadPool::~ThreadPool() {
   if(isStarted_)  // 析构前确保线程池终止运行
     stop();
 }
-
 
 
 inline void ThreadPool::start() {
@@ -94,22 +90,14 @@ inline void ThreadPool::start() {
 }
 
 
-
 inline void ThreadPool::stop() {
   if(isStarted_ == false) return;
 
   {
     MutexLockGuard lock(mutex_);
     isStarted_ = false;
+    full_.signal_all();  // 唤醒线程
   }
-
-  /* 
-   * 激活所有正在等待任务的线程.
-   * 这里full_没有被MutexLockGuard保护, 是为了一点优化:
-   * 因为signal_all()会唤醒线程, 线程被唤醒后会先获取mutex, 然后再检查条件是否满足.
-   * 如果此时被MutexLockGuard保护, 则被唤醒的线程需要在MutexLockGuard析构释放锁后才能获取
-   */
-  full_.signal_all();
 
   // 等待线程终止
   for(size_t i = 0; i != poolSize_; ++i)
@@ -124,17 +112,17 @@ inline void ThreadPool::stop() {
 }
 
 
-
+// producer
 inline void ThreadPool::addTask(const Task &task) {
   MutexLockGuard lock(mutex_);
   while(queue_.size() >= queueSize_)
     empty_.wait();
   queue_.push(task);
-  full_.signal_one();  // 通知消费者
+  full_.signal_one();  // 通知consumer
 }
 
 
-
+// consumer
 inline ThreadPool::Task ThreadPool::getTask() {
   MutexLockGuard lock(mutex_);
   while(queue_.empty() && isStarted_)
@@ -149,11 +137,10 @@ inline ThreadPool::Task ThreadPool::getTask() {
   if(!queue_.empty()) {
     task = queue_.front();
     queue_.pop();
-    empty_.signal_one();  // 通知生产者
+    empty_.signal_one();  // 通知producer
   }
   return task;
 }
-
 
 
 inline void ThreadPool::runInThread() {
@@ -164,7 +151,6 @@ inline void ThreadPool::runInThread() {
     }
   }
 }
-
 
 
 #endif  /* _THREAD_POOL_H_ */

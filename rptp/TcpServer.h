@@ -9,6 +9,10 @@
 
 class TcpServer {
  public:
+  /*
+   * TcpConnectionPtr = std::shared_ptr<TcpConnection>
+   * TcpConnectionCallback = std::function<void(const TcpConnectionPtr &)>
+   */
   using TcpCallback = TcpConnection::TcpConnectionCallback;
 
   explicit TcpServer(const InetAddress &addr);  // 抑制构造函数隐式转换

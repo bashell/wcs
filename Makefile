@@ -9,9 +9,9 @@ OBJ_DIR = ./obj
 OBJ_PATH = $(addprefix $(OBJ_DIR)/, $(subst :, ,$(VPATH)))
 OBJS = $(addprefix $(OBJ_DIR)/,$(subst .cc,.o,$(SRC_PATH)))
 MAKE_OBJECT_DIR := $(shell mkdir -p $(OBJ_DIR) $(OBJ_PATH))
-INCLUDES = -I./include/ -I./rtp/
+INCLUDES = -I./include/ -I./rptp/
 
-LIBS = -lpthread -lrtp
+LIBS = -lpthread -lrptp
 LIBDIRS = -L./lib
 CXX = g++
 CXXFLAGES = -Wall -g -std=c++11
@@ -26,11 +26,11 @@ $(OBJ_PATH)/%.o:%.cc
 
 
 submake:
-	make -C ./rtp/
+	make -C ./rptp/
 	make -C ./dict/
 
 clean:
 	$(RM) $(INSTALL_PATH)/$(BIN)
 	$(RM) $(wildcard $(OBJ_DIR)/*)
-	make -C ./rtp/ clean
+	make -C ./rptp/ clean
 	make -C ./dict/ clean

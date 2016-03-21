@@ -1,7 +1,6 @@
 #ifndef _RIO_H_
 #define _RIO_H_
 
-#define MAXLINE    1024
 #define RIO_BUFFER 8192
 
 class Rio {

@@ -16,7 +16,7 @@ Server::Server(Configuration *config)
       // 缓存模块初始化
       caches_(config->getCacheFile(), config->getCacheNum(), config->getUpdateFrequence()),
       // 线程池模块初始化
-      pool_(1000, config->getCacheNum()),
+      pool_(1000, 100),
       // 日志模块初始化
       log_(config->getLogFile())
 {
@@ -56,7 +56,7 @@ void Server::connectCallback(const TcpConnectionPtr &conn) {
   std::string log_message = oss.str();  // 返回oss中的拷贝
   std::cout << log_message;
   log_.addLog(log_message);
-  conn->send("Please input a word to query:\n");
+  conn->send("Please input a word to query:\r\n");
 }
 
 
@@ -64,6 +64,12 @@ void Server::messageCallback(const TcpConnectionPtr &conn) {
   std::string word = conn->receive();
   //std::cout << "recv: " << word << std::endl;
   //std::cout << "size: " << word.size() << std::endl;
+  
+  // 去掉字符串末尾的\r\n
+  if(word.substr(word.size()-2, 2) == "\r\n")
+    stringutils::trimSpace_rn(word);
+  else if(word.substr(word.size()-1, 1) == "\n")
+    stringutils::trimSpace_n(word);
   pool_.addTask(std::bind(&Server::compute, this, word, caches_.getCacheCopy(), conn));
 }
 
@@ -84,12 +90,11 @@ void Server::compute(const std::string &word, Cache &cache, const TcpConnectionP
   log_.addLog(oss.str());
   oss.str("");
   std::string wd = word;
-  stringutils::trimSpace(wd);  // 去掉行尾换行符
 
   // cache中存在查询单词, 直接返回
   auto iter = cache.getCacheRef().find(wd);
   if(iter != cache.getCacheRef().end()) {
-    conn->send(iter->second + "\n");
+    conn->send(iter->second + "\r\n");
     oss << "Search from cache: " << wd << " -> " << iter->second << std::endl;
     log_.addLog(oss.str());
     oss.str("");
@@ -98,7 +103,7 @@ void Server::compute(const std::string &word, Cache &cache, const TcpConnectionP
   // cache中不存在查询单词, 根据索引查询词库
   else {
     std::string result = search_.query(wd);
-    conn->send(result + "\n");
+    conn->send(result + "\r\n");
     caches_.getGlobalCache()->putIntoCache(wd, result);  // 更新全局cache
     oss << "One pair is add to cache: " << wd << " -> " << result << std::endl;
     log_.addLog(oss.str());

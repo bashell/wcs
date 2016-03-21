@@ -1,6 +1,7 @@
 #ifndef _MUTEX_LOCK_H_
 #define _MUTEX_LOCK_H_
 
+#include <stdio.h>
 #include <pthread.h>
 #include <assert.h>
 

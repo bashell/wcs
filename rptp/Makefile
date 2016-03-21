@@ -1,8 +1,8 @@
 .PHONY:clean
 
 CXX=g++
-CXXFALGS=-Wall -g
-BIN=librtp.a
+CXXFLAGS=-Wall -g
+BIN=librptp.a
 LIB=../lib/
 OBJS=InetAddress.o Socket.o PollPoller.o Rio.o TcpConnection.o TcpServer.o Timer.o TimerThread.o
 STARD=-std=c++11 -rdynamic

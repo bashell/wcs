@@ -6,8 +6,14 @@
 #include <poll.h>
 #include "TcpConnection.h"
 
+#define POLL_EVENT_SIZE 2048
+
 class PollPoller {
  public:
+  /*
+   * TcpConnectionPtr = std::shared_ptr<TcpConnection>
+   * TcpConnectionCallback = std::function<void(const TcpConnectionPtr &)>
+   */
   using PollerCallback = TcpConnection::TcpConnectionCallback;
 
   explicit PollPoller(int listenfd);  // 抑制构造函数隐式转换
@@ -36,11 +42,11 @@ class PollPoller {
 
  private:
   using TcpIterator = std::map<int, TcpConnectionPtr>::iterator;
-  struct pollfd event_[2048];
+  struct pollfd event_[POLL_EVENT_SIZE];
   int listenfd_;
   int maxi_;
   int nready_;
-  std::map<int, TcpConnectionPtr> lists_;  // fd到TcpConnection的映射
+  std::map<int, TcpConnectionPtr> itmap_;  // fd到TcpConnection的映射
 
   PollerCallback onConnectionCallback_;
   PollerCallback onMessageCallback_;

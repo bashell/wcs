@@ -4,8 +4,6 @@
 #include "MutexLock.h"
 
 
-//class MutexLock;
-
 class Condition {
  public:
   Condition(MutexLock&);
@@ -25,28 +23,31 @@ class Condition {
 };
 
 
-
 inline Condition::Condition(MutexLock &mut) : mutex_(mut) {
-  pthread_cond_init(&cond_, NULL);    
+  if(pthread_cond_init(&cond_, NULL) != 0)
+    std::cerr << "cond init" << std::endl;
 }
 
 
 inline Condition::~Condition() {
-  pthread_cond_destroy(&cond_);
+  if(pthread_cond_destroy(&cond_) != 0)
+    std::cerr << "cond destroy" << std::endl;
 }
 
 
 inline void Condition::wait() {
-  //assert(mutex_.isLocked());  // 锁住才能wait
-  pthread_cond_wait(&cond_, mutex_.getMutexPtr());
+  if(pthread_cond_wait(&cond_, mutex_.getMutexPtr()) != 0)
+    std::cerr << "cond wait" << std::endl;
 }
 
 inline void Condition::signal_one() {
-  pthread_cond_signal(&cond_);
+  if(pthread_cond_signal(&cond_) != 0)
+    std::cerr << "cond signal" << std::endl;
 }
 
 inline void Condition::signal_all() {
-  pthread_cond_broadcast(&cond_);
+  if(pthread_cond_broadcast(&cond_) != 0)
+    std::cerr << "cond broadcast" << std::endl;
 }
 
 

@@ -41,9 +41,9 @@ void MakeDictEn::readFile(const std::string &filename) {
   while(getline(in, line)) {
     for(size_t i = 0; i != line.size(); ++i) {
       if(ispunct(line[i]) || isdigit(line[i]))  // 数字和标点符号转换成空格
-        line[i] = 32;
-      else if(isupper(line[i]))  // 小写变大写
-        line[i] += 32;
+        line[i] = ' ';
+      else if(isupper(line[i]))  // 大写变小写
+        tolower(line[i]);
     }
     std::istringstream iss(line);
     std::string word;

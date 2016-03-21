@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
+#include <unistd.h>
 #include "PollPoller.h"
 
 #define ERR_EXIT(m) \
@@ -14,23 +15,23 @@
 
 
 PollPoller::PollPoller(int listenfd) : listenfd_(listenfd) {
-  for(int i = 0; i != 2048; ++i)
+  for(int i = 0; i != POLL_EVENT_SIZE; ++i)
     event_[i].fd = -1;
-  event_[0].fd = listenfd;
-  event_[0].events = POLLIN;
+  event_[0].fd = listenfd_;
+  event_[0].events = POLLIN;  // events of interest on fd
   maxi_ = nready_ = 0;
 }
 
 
 PollPoller::~PollPoller() {
-
+  ::close(listenfd_); 
 }
 
 
 void PollPoller::poll() {
   int ret;
   do {
-    ret = ::poll(event_, maxi_ + 1, 10000);
+    ret = ::poll(event_, maxi_ + 1, 10000);  // 等待10s
   } while(ret == -1 && errno == EINTR);
   if(ret == -1)  // 其它ERROR
     ERR_EXIT("poll");
@@ -63,6 +64,8 @@ void PollPoller::handleData() {
         handleCloseEvent(i);
       else  // 处理消息事件
         handleMessageEvent(peerfd);
+
+      --nready_;
     }
   }
 }
@@ -71,7 +74,7 @@ void PollPoller::handleData() {
 void PollPoller::handleConnectionEvent(int peerfd) {
   // 1. 添加fd至event_
   int i;
-  for(i = 1; i < 2048; ++i) {
+  for(i = 1; i != POLL_EVENT_SIZE; ++i) {
     if(event_[i].fd == -1) {  // 找到第一个未用fd
       event_[i].fd = peerfd;
       event_[i].events = POLLIN;
@@ -80,10 +83,8 @@ void PollPoller::handleConnectionEvent(int peerfd) {
       break;
     }
   }
-  if(i == 2048) {
-    ::fprintf(stderr, "too many clients\n");
-    ::exit(EXIT_FAILURE);
-  }
+  if(i == POLL_EVENT_SIZE) 
+    ERR_EXIT("Too many clients.");
 
   TcpConnectionPtr conn(new TcpConnection(peerfd,
                         InetAddress::getLocalAddress(peerfd),
@@ -93,7 +94,7 @@ void PollPoller::handleConnectionEvent(int peerfd) {
   conn->setCloseCallback(onCloseCallback_);
 
   // 2. map中新增一条
-  std::pair<TcpIterator, bool> ret = lists_.insert(std::make_pair(peerfd, conn));
+  std::pair<TcpIterator, bool> ret = itmap_.insert(std::make_pair(peerfd, conn));
   
   // 3. 调用函数
   assert(ret.second == true);
@@ -103,21 +104,29 @@ void PollPoller::handleConnectionEvent(int peerfd) {
 
 void PollPoller::handleMessageEvent(int peerfd) {
   //std::cout <<"HandleMessageEvent " << peerfd << std::endl;
-  TcpIterator it = lists_.find(peerfd);
-  assert(it != lists_.end());
+  
+  // 1. 查找map
+  TcpIterator it = itmap_.find(peerfd);
+
+  // 2. 调用callback
+  assert(it != itmap_.end());
   it->second->handleMessage();
 }
 
 
 void PollPoller::handleCloseEvent(int i) {
-  assert(i >= 0 && i < 2048);
+  // 1. 重置fd
+  assert(i >= 0 && i < POLL_EVENT_SIZE);
   int peerfd = event_[i].fd;
   assert(peerfd != -1);
+  event_[i].fd = -1;
   //std::cout << "Close " << peerfd << std::endl;
-  TcpIterator it = lists_.find(peerfd);
-  assert(it != lists_.end());
+  
+  // 2. 从map中删除fd
+  TcpIterator it = itmap_.find(peerfd);
+  assert(it != itmap_.end());
   it->second->handleClose();
-  lists_.erase(it);
+  itmap_.erase(it);
 }
 
 

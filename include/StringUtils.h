@@ -18,8 +18,10 @@ namespace stringutils {
   inline int editDistanceHelper(const std::vector<uint32_t> &v1, const std::vector<uint32_t> &v2, int len1, int len2);
   int editDistance(const std::string &s1, const std::string &s2);
 
-  // trim a string
-  void trimSpace(std::string &word);
+  // trim \r\n
+  void trimSpace_rn(std::string &word);
+  // trim \n
+  void trimSpace_n(std::string &word);
 }
 
 

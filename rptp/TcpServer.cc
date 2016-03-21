@@ -25,9 +25,9 @@ TcpServer::TcpServer(const InetAddress &addr) {
   if(sockfd == -1)
     ERR_EXIT("socket");
   sock_.reset(new Socket(sockfd));  // 释放sock_原来指向的对象, 并指向new出来的新对象
-  sock_->setReusePort();       // 设置端口复用
-  sock_->bindAddress(addr);    // bind
-  sock_->listen();             // listen
+  sock_->setReusePort();            // 设置端口复用
+  sock_->bindAddress(addr);         // bind
+  sock_->listen();                  // listen
 }
 
 

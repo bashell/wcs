@@ -60,6 +60,7 @@ inline void Thread::setCallback(const ThreadFunc &cb) {
 
 
 inline void Thread::start() {
+  isStarted_ = true;
   if(pthread_create(&tid_, NULL, threadFunc, this) != 0)  // 将this指针(调用对象的地址)传给threadFunc
     ERR_EXIT("pthread_create");
 }
@@ -68,6 +69,7 @@ inline void Thread::start() {
 inline void Thread::join() {
   if(pthread_join(tid_, NULL) != 0)
     ERR_EXIT("pthread_join");
+  isStarted_ = false;
 }
 
 

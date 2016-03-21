@@ -103,8 +103,16 @@ int stringutils::editDistance(const std::string &s1, const std::string &s2) {
 }
 
 
-void stringutils::trimSpace(std::string &word) {
-  char tmp[1024] = {0};
+void stringutils::trimSpace_rn(std::string &word) {
+  char tmp[512] = {0};
+  ::strcpy(tmp, word.c_str());
+  tmp[::strlen(tmp)-2] = '\0';  // 去掉行尾\r\n
+  word = static_cast<std::string>(tmp);
+}
+
+
+void stringutils::trimSpace_n(std::string &word) {
+  char tmp[512] = {0};
   ::strcpy(tmp, word.c_str());
   tmp[::strlen(tmp)-1] = '\0';  // 去掉行尾\n
   word = static_cast<std::string>(tmp);

@@ -48,7 +48,7 @@ uint16_t InetAddress::portNetEndian() const {
 
 std::string InetAddress::toIp() const {
   // inet_ntoa: struct in_addr sin_addr --->  "192.168.1.1"
-  return std::string(inet_ntoa(addr_.sin_addr));
+  return std::string(::inet_ntoa(addr_.sin_addr));
 }
 
 

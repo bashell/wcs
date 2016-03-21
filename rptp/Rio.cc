@@ -16,7 +16,7 @@ ssize_t Rio::readn(char *usrbuf, size_t n) {
   ssize_t nread;
   char *bufp = usrbuf;
   while(nleft > 0) {
-    if((nread = read(bufp, nleft)) == -1)  // 调用自定义的read
+    if((nread = read(bufp, nleft)) == -1)  // 调用Rio::read
       return -1;  // 这里不需要处理EINTR, 因为在自定义的read中已有对interrupt情况的处理
     else if(nread == 0)
       break;
@@ -34,7 +34,7 @@ ssize_t Rio::readline(char *usrbuf, size_t maxlen) {
   size_t i;
   for(i = 0; i < maxlen - 1; ++i) {
     // 一次读取一个字符
-    if((nread = read(&c, 1)) == -1)  // 调用自定义的read
+    if((nread = read(&c, 1)) == -1)  // 调用Rio::read
       return -1;
     else if(nread == 0) {  // 读到EOF
       if(i == 0)  // 第一个字符读取遇到EOF, 直接返回0
@@ -74,6 +74,7 @@ ssize_t Rio::read(char *usrbuf, size_t n) {
   ssize_t nread;
   // Rio构造函数将left_设为初值0, 因此可以进入while循环
   while(left_ <= 0) {
+    ::memset(buffer_, 0, sizeof(buffer_));
     nread = ::read(fd_, buffer_, sizeof(buffer_));
     if(nread == -1) {
       if(errno == EINTR)  // interrupt
