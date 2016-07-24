@@ -12,11 +12,11 @@ Server::Server(Configuration *config)
       // 服务器模块初始化 
       server_(addr_),
       // 查询模块初始化
-      search_(config->getEnDictFile(), config->getChDictFile()),
+      search_(),
       // 缓存模块初始化
       caches_(config->getCacheFile(), config->getCacheNum(), config->getUpdateFrequence()),
       // 线程池模块初始化
-      pool_(1000, 100),
+      pool_(1000, 4),
       // 日志模块初始化
       log_(config->getLogFile())
 {
@@ -91,7 +91,7 @@ void Server::compute(const std::string &word, Cache &cache, const TcpConnectionP
   oss.str("");
   std::string wd = word;
 
-  // cache中存在查询单词, 直接返回
+  // cache命中
   auto iter = cache.getCacheRef().find(wd);
   if(iter != cache.getCacheRef().end()) {
     conn->send(iter->second + "\r\n");
@@ -100,9 +100,9 @@ void Server::compute(const std::string &word, Cache &cache, const TcpConnectionP
     oss.str("");
   } 
 
-  // cache中不存在查询单词, 根据索引查询词库
+  // 查数据库
   else {
-    std::string result = search_.query(wd);
+    std::string result = search_.queryDB(wd);
     conn->send(result + "\r\n");
     caches_.getGlobalCache()->putIntoCache(wd, result);  // 更新全局cache
     oss << "One pair is add to cache: " << wd << " -> " << result << std::endl;

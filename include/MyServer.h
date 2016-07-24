@@ -7,6 +7,7 @@
 #include "MyLog.h"
 #include "MyCacheManager.h"
 #include "MyTextQuery.h"
+
 #include "ThreadPool.h"
 #include "InetAddress.h"
 #include "TcpServer.h"
@@ -26,6 +27,7 @@ class Server {
   void connectCallback(const TcpConnectionPtr &conn);
   void messageCallback(const TcpConnectionPtr &conn);
   void closeCallback(const TcpConnectionPtr &conn);
+
   void compute(const std::string &word, Cache &cache, const TcpConnectionPtr &conn);
   
  private:
@@ -36,5 +38,6 @@ class Server {
   ThreadPool pool_;      // 线程池
   Log log_;              // 日志
 };
+
 
 #endif  /* _MY_SERVER_H_ */

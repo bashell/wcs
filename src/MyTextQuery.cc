@@ -1,64 +1,128 @@
 #include <iostream>
-#include <fstream>
 #include <sstream>
 #include <queue>
+#include <vector>
 #include <set>
+#include <cstdlib>
 #include "MyTextQuery.h"
+#include "MyWord.h"
 #include "StringUtils.h"
 
-TextQuery::TextQuery(const std::string &enDictFile, const std::string &chDictFile)
-    : enDict_(enDictFile), chDict_(chDictFile) 
-{
-  readFile(0);  // en
-  readFile(1);  // ch
-  index_.buildIndex(dict_);  // 建立索引
+
+TextQuery::TextQuery() : mysql_conn_ptr_(nullptr) {
+  connectDB();
 }
 
 
-void TextQuery::readFile(int flag) {
-  std::ifstream in;
-  std::string dictFile = (flag == 0 ? enDict_: chDict_);
-  if(!stringutils::openRead(in, dictFile))
-    std::cerr << "Can't open: " + dictFile << std::endl;
-  std::string line;
-  while(getline(in, line)) {
-    std::istringstream iss(line);
-    std::string str;
-    int freq;
-    iss >> str >> freq;
-    Word wd;
-    wd.word_ = str;
-    wd.distance_ = 20;  // 默认为20
-    wd.frequency_ = freq;
-    dict_.insert(std::make_pair(str, wd));
+TextQuery::~TextQuery() {
+  mysql_close(mysql_conn_ptr_);
+}
+
+
+void TextQuery::connectDB() {
+  mysql_conn_ptr_ = mysql_init(nullptr);
+  const char *server_host = info.SERVER_HOST.c_str();
+  const char *sql_user_name = info.SQL_USER_NAME.c_str();
+  const char *sql_password = info.SQL_PASSWORD.c_str();
+  const char *db_name = info.DB_NAME.c_str();
+  if(!mysql_real_connect(mysql_conn_ptr_, server_host, sql_user_name, sql_password, db_name, 0, NULL, 0)) {
+    fprintf(stderr, "Connection failed\n");
+    if(mysql_error(mysql_conn_ptr_))
+      fprintf(stderr, "Connection error %d: %s\n", mysql_errno(mysql_conn_ptr_), mysql_error(mysql_conn_ptr_));
   }
-  in.close();
-  in.clear();
+  if(mysql_set_character_set(mysql_conn_ptr_, "utf8")) {
+    printf("New client character set: %s\n", mysql_character_set_name(mysql_conn_ptr_));
+  }
+  //std::cout << "Connect success" << std::endl;
 }
 
 
-std::string TextQuery::query(const std::string &input) {
-  std::priority_queue<Word> pq;  // 优先级队列, 一次查询有效
-  // 若在词库中, 直接返回
-  //std::cout << input << std::endl;
-  if(dict_.find(input) != dict_.end()) {
+std::string TextQuery::queryDB(const std::string &input) {
+  std::string result("");
+  
+  if(queryTableOne(info.TABLE_ONE_NAME, input))  // found in TABLE_ONE
     return input;
+  if(queryTableTwo(info.TABLE_TWO_NAME, input, result))  // calculated in TABLE_TWO
+    return result;
+
+  result = "Sorry, no matching word, try again";
+  return result;
+}
+
+
+bool TextQuery::queryTableOne(const std::string &table_name1, const std::string &input) {
+  char sql_select[256];
+  const char *table_name = table_name1.c_str();
+  const char *input_str = input.c_str();
+  int res;
+  bool isFound = false;
+  MYSQL_RES *res_ptr;
+  MYSQL_ROW sqlrow;
+
+  sprintf(sql_select, "SELECT word FROM %s WHERE word = '%s';", table_name, input_str);
+  res = mysql_query(mysql_conn_ptr_, sql_select);
+  if(res != 0) {
+    fprintf(stderr, "SELECT error: %s\n", mysql_error(mysql_conn_ptr_));
+  } else {
+    res_ptr = mysql_use_result(mysql_conn_ptr_);
+    if(res_ptr) {
+      if((sqlrow = mysql_fetch_row(res_ptr))) 
+        isFound = true;
+      mysql_free_result(res_ptr);
+    }
+  }
+  return isFound;
+}
+
+
+bool TextQuery::queryTableTwo(const std::string &table_name2, const std::string &input, std::string &result) {
+  std::priority_queue<Word> pq;
+  char sql_select[256];
+  const char *table_name = table_name2.c_str();
+  int res;
+  bool isRecommended = false;
+  MYSQL_RES *res_ptr;
+  MYSQL_ROW sqlrow;
+  std::vector<uint32_t> uvec;
+  std::set<Word> range_set;
+
+  stringutils::utf8ToUint32(input, uvec);
+  for(const auto item: uvec) {
+
+    sprintf(sql_select, "SELECT word, distance, frequency FROM %s WHERE item = '%d';", table_name, item);
+    res = mysql_query(mysql_conn_ptr_, sql_select);
+    if(res != 0) {
+      fprintf(stderr, "SELECT error: %s\n", mysql_error(mysql_conn_ptr_));
+    } else {
+      res_ptr = mysql_store_result(mysql_conn_ptr_);
+      if(res_ptr) {
+        while((sqlrow = mysql_fetch_row(res_ptr))) {
+          //std::cout << sqlrow[0] << " " << sqlrow[1] << " " << sqlrow[2] << std::endl;
+          Word wd(sqlrow[0], ::atoi(sqlrow[1]), ::atoi(sqlrow[2]));
+          wd.distance_ = stringutils::editDistance(input, std::string(sqlrow[0]));
+          if(wd.distance_ <= PQ_TRIM_SIZE)
+            pq.push(wd);
+        }
+        mysql_free_result(res_ptr);
+      }
+    }
+  }
+  //std::cout << pq.size() << std::endl;
+  if(!pq.empty()) {
+    result = pq.top().word_;
+    isRecommended = true;
   }
 
-  // 否则找最相近的
-  std::set<Word> range_set;
-  index_.getRange(input, range_set);  // 根据输入单词得出索引范围
-  for(auto iter = range_set.begin(); iter != range_set.end(); ++iter) {
-    Word wd = *iter;
-    wd.distance_ = stringutils::editDistance(input, iter->word_);
-    if(wd.distance_ <= 3)  // 仅将编辑距离不大于3的单词加入pq
-      pq.push(wd);
-  }
-  std::string res;
-  // pq队首元素最为匹配
-  if(!pq.empty())
-    res = pq.top().word_;
-  else
-    res = "Sorry, no matching word, try again.";
-  return res;
+  return isRecommended;
 }
+
+/*
+int main()
+{
+  TextQuery tq;
+  std::string str;
+  while(std::cin >> str)
+    std::cout << tq.queryDB(str) << std::endl;
+  return 0;
+}
+*/
