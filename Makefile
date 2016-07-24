@@ -11,7 +11,7 @@ OBJS = $(addprefix $(OBJ_DIR)/,$(subst .cc,.o,$(SRC_PATH)))
 MAKE_OBJECT_DIR := $(shell mkdir -p $(OBJ_DIR) $(OBJ_PATH))
 INCLUDES = -I./include/ -I./rptp/
 
-LIBS = -lpthread -lrptp
+LIBS = -lpthread -lrptp -lmysqlclient
 LIBDIRS = -L./lib
 CXX = g++
 CXXFLAGES = -Wall -g -std=c++11

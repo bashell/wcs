@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string.h>
-#include "StringUtils.h"
+#include "../include/StringUtils.h"
 
 
 std::ifstream &stringutils::openRead(std::ifstream &is, const std::string &filename) {

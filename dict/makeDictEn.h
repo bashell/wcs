@@ -4,23 +4,25 @@
 #include <string>
 #include <fstream>
 #include <unordered_map>
-//#include <map>
-//#include <unordered_set>
 
 
 class MakeDictEn {
  public:
+  MakeDictEn();
+  ~MakeDictEn();
+
   void readFile(const std::string &filename);
-  //void readFile(const std::string &filename, const std::string &exclude_filename);
   void writeFile(const std::string &filename);
 
  private:
+  MakeDictEn(const MakeDictEn&) = delete;
+  MakeDictEn &operator=(const MakeDictEn&) = delete;
+
   std::ifstream &openFileRead(std::ifstream &is, const std::string &filename);
   std::ofstream &openFileWrite(std::ofstream &os, const std::string &filename);
 
  private:
   std::unordered_map<std::string, size_t> words_;  // 词典
-  //std::unordered_set<std::string> exclude_;        // 停止词
 };
 
 

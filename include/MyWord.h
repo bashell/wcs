@@ -4,9 +4,10 @@
 #include <string>
 
 struct Word {
-  std::string word_;  // 单词
-  int distance_;      // 编辑距离
-  int frequency_;     // 词频
+  Word(const std::string &word, uint32_t distance, uint32_t frequency)
+      : word_(word), distance_(distance), frequency_(frequency) {}
+
+  ~Word() {}
 
   // 重载<
   bool operator<(const Word &other) const {
@@ -17,6 +18,10 @@ struct Word {
     else
       return false;
   }
+  
+  std::string word_;  // 单词
+  uint32_t distance_;      // 编辑距离
+  uint32_t frequency_;     // 词频
 };
 
 #endif  /* _MY_WORD_H_ */

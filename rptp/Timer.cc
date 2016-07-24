@@ -49,7 +49,7 @@ void Timer::runTimer() {
     ERR_EXIT("timerfd_settime");
   isStarted_ = true;
   while(isStarted_) {
-    nready = poll(event, 1, 10000);
+    nready = poll(event, 1, 100000);
     if(nready == -1)
       ERR_EXIT("poll");
     else if(nready == 0)

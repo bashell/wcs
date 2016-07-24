@@ -26,7 +26,7 @@ void CacheManager::start() {
   // 读取cache文件内容至全局cache
   global_cache_.readCacheFile(cache_file_);
   // 缓存池初始化
-  while(caches_.size() <= cache_sz_)
+  while(caches_.size() < cache_sz_)
     caches_.push(global_cache_);
   // 计时器启动
   timer_.startTimerThread();
@@ -73,5 +73,3 @@ void CacheManager::writeToFile() {
   MutexLockGuard lock(mutex_);
   global_cache_.writeCacheFile(cache_file_);
 }
-
-

@@ -6,7 +6,7 @@
 #include <stdlib.h>  // atexit, atoi
 
 /*
- * 单例模式读取配置文件
+ * 饿汉式
  */
 class Configuration {
  public:

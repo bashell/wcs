@@ -58,4 +58,3 @@ void Cache::putIntoCache(const std::string &key, const std::string &val) {
 std::unordered_map<std::string, std::string> &Cache::getCacheRef() {
   return cache_;
 }
-
