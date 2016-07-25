@@ -12,31 +12,30 @@
 
 class CacheManager {
  public:
-  CacheManager(const std::string &cacheFile, size_t cacheNum, int updateFrequence);
+  CacheManager(const std::string &cacheFile, int updateFrequence); 
   ~CacheManager();
 
   void start();
   void stop();
-  Cache getCacheCopy();  // 申请cache
-  void giveBackCache();  // 归还cache
-  void writeToFile();
 
-  Cache *getGlobalCache() { return &global_cache_; }
+  void writeToFile();
+  void copyMasterToSlave();
+
+  LruCache *getMasterGlobalCache() { return &master_global_cache_; }
+  LruCache *getSlaveGlobalCache() { return &slave_global_cache_; }
 
  private:
   CacheManager(const CacheManager&) = delete;
   CacheManager &operator=(const CacheManager&) = delete;
 
  private:
-  std::string cache_file_;    // cache文件
-  size_t cache_sz_;           // 缓存池大小
-  bool isStarted_;            // 缓存池开启标志
-  Cache global_cache_;        // 全局cache
-  std::queue<Cache> caches_;  // 缓存池
+  std::string cache_file_;        // cache文件
+  bool isStarted_;                // CacheManager开启标志
+  LruCache master_global_cache_;  // Master Cache
+  LruCache slave_global_cache_;   // Slave  Cache
   mutable MutexLock mutex_;
-  Condition empty_;
-  Condition full_;
-  TimerThread timer_;         // 定时器, 定时将全局cache内容回写磁盘文件
+  TimerThread timer_one_;         // 定时将Slave Cache内容回写磁盘cache文件
+  TimerThread timer_two_;         // 定时进行主/从cache复制
 };
 
 

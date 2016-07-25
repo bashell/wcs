@@ -28,15 +28,16 @@ class Server {
   void messageCallback(const TcpConnectionPtr &conn);
   void closeCallback(const TcpConnectionPtr &conn);
 
-  void compute(const std::string &word, Cache &cache, const TcpConnectionPtr &conn);
+  void compute(const std::string &word, LruCache *cache, const TcpConnectionPtr &conn);
   
  private:
   InetAddress addr_;
-  TcpServer server_;     // 服务器
-  TextQuery search_;     // 查询
-  CacheManager caches_;  // 缓存池
-  ThreadPool pool_;      // 线程池
-  Log log_;              // 日志
+  TcpServer server_;     // 服务器模块
+  TextQuery search_;     // 查询模块
+  CacheManager caches_;  // 缓存模块
+  ThreadPool pool_;      // 线程池模块
+  Log log_;              // 日志模块
+  mutable MutexLock cache_mutex_;
 };
 
 

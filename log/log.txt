@@ -1,638 +1,161 @@
 Server is start.
-Client 127.0.0.1:45354 is online.
+Client 127.0.0.1:43982 is online.
 
-Get a cache for computing.
+Client 127.0.0.1:43983 is online.
 
-One pair is add to cache: 查询 -> 查询
+Client 127.0.0.1:43984 is online.
 
-Give back a cache.
+Query request comes.
 
-Get a cache for computing.
+One pair is add to cache: man -> man
 
-One pair is add to cache: 无额不作 -> 无恶不作
+Query request comes.
 
-Give back a cache.
+One pair is add to cache: go -> go
 
-Get a cache for computing.
+Query request comes.
 
-One pair is add to cache: 无额不作 -> 无恶不作
+One pair is add to cache: now -> now
 
-Give back a cache.
+Query request comes.
 
-Get a cache for computing.
+One pair is add to cache: 没有 -> 没有
 
-One pair is add to cache: 南京 -> 南京
+Query request comes.
 
-Give back a cache.
+Search from cache: nine -> nine
 
-Get a cache for computing.
+Query request comes.
 
-One pair is add to cache: sorry -> sorry
+One pair is add to cache: 那边 -> 那边
 
-Give back a cache.
+Query request comes.
 
-Get a cache for computing.
+One pair is add to cache: 这边 -> 这边
 
-One pair is add to cache: sorri -> sore
+Query request comes.
 
-Give back a cache.
+One pair is add to cache: 里面 -> 里面
 
-Get a cache for computing.
+Query request comes.
 
-One pair is add to cache: sorru -> sore
+One pair is add to cache: 外面 -> 外面
 
-Give back a cache.
+Query request comes.
 
-Get a cache for computing.
+One pair is add to cache: woman -> woman
 
-One pair is add to cache: sorryi -> sore
+Query request comes.
 
-Give back a cache.
+One pair is add to cache: weman -> weak
 
-Get a cache for computing.
+Query request comes.
 
-One pair is add to cache: name -> name
+One pair is add to cache: weak -> weak
 
-Give back a cache.
+Query request comes.
 
-Get a cache for computing.
+One pair is add to cache: wear -> wear
 
-One pair is add to cache: namm -> name
+Query request comes.
 
-Give back a cache.
+One pair is add to cache: llive -> like
 
-Get a cache for computing.
+Query request comes.
 
-One pair is add to cache: job -> job
+One pair is add to cache: like -> like
 
-Give back a cache.
+Query request comes.
 
-Get a cache for computing.
+Search from cache: life -> life
 
-One pair is add to cache: joo -> joy
+Query request comes.
 
-Give back a cache.
+One pair is add to cache: look -> look
 
-Get a cache for computing.
+Client 127.0.0.1:43984 is offline.
 
-One pair is add to cache: 金庸 -> 金庸
+Query request comes.
 
-Give back a cache.
+One pair is add to cache: ok -> ox
 
-Get a cache for computing.
+Query request comes.
 
-One pair is add to cache: 小说 -> 小说
+One pair is add to cache: ox -> ox
 
-Give back a cache.
+Query request comes.
 
-Get a cache for computing.
+One pair is add to cache: 清朝 -> 清楚
 
-One pair is add to cache: 晓说 -> 说
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: good -> good
-
-Get a cache for computing.
-
-One pair is add to cache: listen -> listen
-
-Give back a cache.
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: listee -> little
-
-Get a cache for computing.
-
-Give back a cache.
-
-One pair is add to cache: littll -> little
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: goood -> good
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: hoope -> hope
-
-Get a cache for computing.
-
-One pair is add to cache: animal -> angel
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: angle -> angle
-
-Give back a cache.
-
-Get a cache for computing.
-
-Give back a cache.
-
-One pair is add to cache: angell -> angel
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: 很好 -> 很好
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: 不好 -> 不好
-
-Get a cache for computing.
-
-Give back a cache.
+Query request comes.
 
 One pair is add to cache: 剑术 -> 剑术
 
-Get a cache for computing.
+Query request comes.
 
-Give back a cache.
+One pair is add to cache: 大师 -> 大师
 
-One pair is add to cache: gongcheng -> Sorry, no matching word, try again.
+Query request comes.
 
-Give back a cache.
+One pair is add to cache: 徒弟 -> 徒弟
 
-Get a cache for computing.
+Query request comes.
 
-One pair is add to cache: 工程 -> 工程
+One pair is add to cache: 师傅 -> 师傅
 
-Give back a cache.
+Client 127.0.0.1:43982 is offline.
 
-Get a cache for computing.
+Query request comes.
 
-One pair is add to cache: 进入 -> 进入
+One pair is add to cache: 人类 -> 人
 
-Get a cache for computing.
+Query request comes.
 
-Give back a cache.
+One pair is add to cache: 类比 -> 比
 
-One pair is add to cache: google -> people
+Query request comes.
 
-Get a cache for computing.
+One pair is add to cache: 类似 -> 类似
 
-Give back a cache.
+Query request comes.
 
-One pair is add to cache: peopll -> people
+One pair is add to cache: data -> day
 
-Get a cache for computing.
+Query request comes.
 
-Give back a cache.
+One pair is add to cache: day -> day
 
-One pair is add to cache: poll -> poll
+Query request comes.
 
-Give back a cache.
+One pair is add to cache: sun -> sun
 
-Get a cache for computing.
+Query request comes.
 
-One pair is add to cache: epoll -> shall
+One pair is add to cache: moon -> moon
 
-Get a cache for computing.
+Query request comes.
 
-One pair is add to cache: shale -> shall
+One pair is add to cache: sky -> sky
 
-Give back a cache.
+Query request comes.
 
-Get a cache for computing.
+One pair is add to cache: air -> air
 
-Give back a cache.
+Query request comes.
 
-One pair is add to cache: shallf -> shall
+One pair is add to cache: aiir -> air
 
-Client 127.0.0.1:45354 is offline.
+Query request comes.
 
-Server is start.
-Client 127.0.0.1:43788 is online.
+One pair is add to cache: bluue -> blue
 
-Server is start.
-Client 127.0.0.1:43789 is online.
+Query request comes.
 
-Server is start.
-Client 127.0.0.1:43790 is online.
+One pair is add to cache: bue -> blue
 
-Get a cache for computing.
+Query request comes.
 
-One pair is add to cache: j -> joy
+One pair is add to cache: aair -> air
 
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: joy -> joy
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: 你好 -> 你好
-
-Get a cache for computing.
-
-Give back a cache.
-
-One pair is add to cache: 我是人 -> 我是
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: 江湖 -> 江湖
-
-Get a cache for computing.
-
-Give back a cache.
-
-One pair is add to cache: 票啊啊  -> 啊啊啊
-
-Server is start.
-Client 127.0.0.1:43791 is online.
-
-Client 127.0.0.1:43792 is online.
-
-Get a cache for computing.
-
-One pair is add to cache: jfd -> did
-
-Give back a cache.
-
-Get a cache for computing.
-
-Search from cache: 你好 -> 你好
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: 死神 -> 死
-
-Get a cache for computing.
-
-Give back a cache.
-
-One pair is add to cache: fds -> do
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: fa -> far
-
-Get a cache for computing.
-
-Give back a cache.
-
-One pair is add to cache: df -> do
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: a -> a
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: df -> do
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: 奥迪法对方 -> 对方
-
-Client 127.0.0.1:43791 is offline.
-
-Client 127.0.0.1:43792 is offline.
-
-Server is start.
-Client 127.0.0.1:43807 is online.
-
-Get a cache for computing.
-
-One pair is add to cache: Hello -> Hell
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: Ok -> O
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: 你好啊 -> 你好
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: 江虎 -> 江湖
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: 糊弄 -> 弄
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: 哦 -> 哦
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: have -> have
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: not -> not
-
-Give back a cache.
-
-Get a cache for computing.
-
-Search from cache: good -> good
-
-Give back a cache.
-
-Server is start.
-Client 127.0.0.1:43808 is online.
-
-Get a cache for computing.
-
-One pair is add to cache: jfj -> joy
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: No -> No
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: 你好啊 -> 你好
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache:  uu -> us
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: Me -> Me
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: American -> Amariah
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: Good -> Good
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: Nice to meet you -> Sorry, no matching word, try again
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: haha -> aha
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: ow -> own
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: wa -> was
-
-Give back a cache.
-
-Client 127.0.0.1:43808 is offline.
-
-Server is start.
-Client 127.0.0.1:43813 is online.
-
-Get a cache for computing.
-
-One pair is add to cache: Opps -> Open
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: Haha -> aha
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: Niu -> in
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: live -> live
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: life -> life
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: 受不了了 -> 不了
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: 受死 -> 受死
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: 挂了 -> 了
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: 挂面 -> 面
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: 挂彩 -> 挂
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: 生病 -> 生病
-
-Give back a cache.
-
-Client 127.0.0.1:43813 is offline.
-
-Client 127.0.0.1:43815 is online.
-
-Get a cache for computing.
-
-One pair is add to cache: 放假就飞机 -> Sorry, no matching word, try again
-
-Give back a cache.
-
-Client 127.0.0.1:43815 is offline.
-
-Server is start.
-Client 127.0.0.1:43816 is online.
-
-Get a cache for computing.
-
-One pair is add to cache: ni -> in
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: fjj -> far
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: kdk -> do
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: lfl  -> fly
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: 你 -> 你
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: 我 -> 我
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: 它 -> 它
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: 他们 -> 他们
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: 搞笑 -> 笑
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: 星 -> 星
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: 性 -> 性
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: 可以 -> 可以
-
-Give back a cache.
-
-Client 127.0.0.1:43816 is offline.
-
-Server is start.
-Client 127.0.0.1:43817 is online.
-
-Get a cache for computing.
-
-One pair is add to cache: Hello -> Hell
-
-Give back a cache.
-
-Get a cache for computing.
-
-One pair is add to cache: Good -> Good
-
-Give back a cache.
-
-Client 127.0.0.1:43817 is offline.
-
-Client 127.0.0.1:43818 is online.
-
-Client 127.0.0.1:43818 is offline.
-
-Client 127.0.0.1:43819 is online.
-
-Client 127.0.0.1:43819 is offline.
-
-Client 127.0.0.1:43820 is online.
-
-Client 127.0.0.1:43820 is offline.
+Client 127.0.0.1:43983 is offline.
 

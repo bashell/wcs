@@ -5,23 +5,31 @@
 #include <unordered_map>
 #include <list>
 
-#define DEFAULT_CACHE_SIZE 2048
+#define DEFAULT_CACHE_SIZE 1024*1024
 
-class Cache {
+
+struct Node {
+  std::string key_;
+  std::string val_;
+};
+
+class LruCache {
  public:
-  Cache();
-  Cache(size_t sz);
-  ~Cache();
+  LruCache();
+  ~LruCache();
 
   void readCacheFile(const std::string &filename);
   void writeCacheFile(const std::string &filename);
  
+  bool findIfInCache(const std::string &key, std::string &val);
   void putIntoCache(const std::string &key, const std::string &val);
-  std::unordered_map<std::string, std::string> &getCacheRef();
+
+  void copyLruCache(const LruCache lru_c);
 
  private:
-  std::unordered_map<std::string, std::string> cache_;  // 缓存
-  size_t maxSize_;
+  std::list<Node> cache_list_;  // cache链表
+  std::unordered_map<std::string, std::list<Node>::iterator> cache_list_map_;  // 用于标记key在cache_list_中的位置
+  size_t maxSize_;  // cache大小
 };
 
 

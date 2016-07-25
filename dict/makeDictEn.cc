@@ -6,6 +6,11 @@ MakeDictEn::MakeDictEn() {}
 
 MakeDictEn::~MakeDictEn() {}
 
+/**
+ * 读取英文词库文件并构建词典
+ *
+ * @param filename: 文件名
+ */
 void MakeDictEn::readFile(const std::string &filename) {
   std::ifstream in;
   std::string line;
@@ -27,6 +32,11 @@ void MakeDictEn::readFile(const std::string &filename) {
   in.clear();
 }
 
+/**
+ * 回写磁盘文件
+ *
+ * @param filename: 文件名
+ */
 void MakeDictEn::writeFile(const std::string &filename) {
   std::ofstream out;
   if(!openFileWrite(out, filename))
@@ -37,6 +47,12 @@ void MakeDictEn::writeFile(const std::string &filename) {
   out.clear();
 }
 
+/**
+ * 打开文件并返回输入流
+ *
+ * @param is: 输入流
+ * @param filename: 文件名
+ */
 std::ifstream &MakeDictEn::openFileRead(std::ifstream &is, const std::string &filename) {
   is.close();
   is.clear();
@@ -44,6 +60,12 @@ std::ifstream &MakeDictEn::openFileRead(std::ifstream &is, const std::string &fi
   return is;
 }
 
+/**
+ * 打开文件并返回输出流
+ *
+ * @param os: 输出流
+ * @param filename: 文件名
+ */
 std::ofstream &MakeDictEn::openFileWrite(std::ofstream &os, const std::string &filename) {
   os.close();
   os.clear();

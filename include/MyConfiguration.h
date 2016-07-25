@@ -6,7 +6,7 @@
 #include <stdlib.h>  // atexit, atoi
 
 /*
- * 饿汉式
+ * 单例模式读取配置文件(饿汉式)
  */
 class Configuration {
  public:
@@ -31,7 +31,6 @@ class Configuration {
   const std::string &getEnDictFile() const { return endict_file_; }
   const std::string &getChDictFile() const { return chdict_file_; }
   const std::string &getCacheFile() const { return cache_file_; }
-  const int getCacheNum() const { return cache_num_; }
   const int getUpdateFrequence() const { return update_frequence_; }
 
  private:
@@ -48,7 +47,6 @@ class Configuration {
   std::string endict_file_;
   std::string chdict_file_;
   std::string cache_file_;
-  int cache_num_;
   int update_frequence_;
 };
 

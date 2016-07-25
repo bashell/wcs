@@ -15,7 +15,9 @@ MyDB::~MyDB() {
   mysql_close(mysql_conn_ptr_);
 }
 
-
+/**
+ * 数据库连接
+ */
 void MyDB::connectDB() {
   mysql_conn_ptr_ = mysql_init(nullptr);
   const char *server_host = info.SERVER_HOST.c_str();
@@ -33,7 +35,18 @@ void MyDB::connectDB() {
   //std::cout << "Connect success" << std::endl;
 }
 
-
+/**
+ * 构建数据库表1
+ * 
+ * 表1
+ * | Field     | Type        | Null | Key |
+ * ----------------------------------------
+ * | word      | varchar(20) | NO   | PRI |
+ * | distance  | int(11)     | NO   |     |
+ * | frequency | int(11)     | NO   |     |
+ * 
+ * @param flag: 0读取英文词典, 1读取中文词典
+ */
 void MyDB::buildDictionaryOne(int flag) {
   std::ifstream in;
   std::string dictFile = (flag == 0 ? enDict_ : chDict_);
@@ -50,7 +63,19 @@ void MyDB::buildDictionaryOne(int flag) {
   }
 }
 
-
+/**
+ * 构建数据库表2
+ *
+ * 表1
+ * | Field     | Type        | Null | Key |
+ * ----------------------------------------
+ * | item      | int(11)     | NO   |     |
+ * | word      | varchar(20) | NO   | PRI |
+ * | distance  | int(11)     | NO   |     |
+ * | frequency | int(11)     | NO   |     |
+ *
+ * @param flag: 0读取英文词典, 1读取中文词典
+ */
 void MyDB::buildDictionaryTwo(int flag) {
   std::ifstream in;
   std::string dictFile = (flag == 0 ? enDict_ : chDict_);
@@ -71,7 +96,14 @@ void MyDB::buildDictionaryTwo(int flag) {
   }
 }
 
-
+/**
+ * 表1构建过程
+ *
+ * @param table_name1: 表1名称
+ * @param word: word域
+ * @param distance: distance域
+ * @param frequency: frequency域
+ */
 void MyDB::buildTableOne(const std::string &table_name1, const std::string &word, uint32_t distance, uint32_t frequency) {
   char sql_insert[256];
   const char *table_name = table_name1.c_str();
@@ -84,7 +116,15 @@ void MyDB::buildTableOne(const std::string &table_name1, const std::string &word
   }
 }
 
-
+/**
+ * 表2构建过程
+ *
+ * @param table_name2: 表2名称
+ * @param item: item域
+ * @param word: word域
+ * @param distance: distance域
+ * @param frequency: frequency域
+ */
 void MyDB::buildTableTwo(const std::string &table_name2, uint32_t item, const std::string &word, uint32_t distance, uint32_t frequency) {
   char sql_insert[256];
   const char *table_name = table_name2.c_str();
@@ -97,16 +137,3 @@ void MyDB::buildTableTwo(const std::string &table_name2, uint32_t item, const st
   }
 }
 
-/*
-int main()
-{
-  std::string en = "../data/en_out.txt";
-  std::string ch = "../data/ch_out.txt";
-  MyDB db(en, ch);
-  db.buildDictionaryOne(0);
-  db.buildDictionaryOne(1);
-  //db.buildDictionaryTwo(0);
-  //db.buildDictionaryTwo(1);
-  return 0;
-}
-*/

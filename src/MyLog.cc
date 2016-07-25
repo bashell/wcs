@@ -8,25 +8,26 @@ Log::Log(const std::string &logFile)
     : log_file_(logFile),
       isStarted_(false),
       cond_(mutex_),
-      thread_(std::bind(&Log::run, this))
-{
-}
-
+      thread_(std::bind(&Log::run, this)) 
+{}
 
 Log::~Log() {
   if(isStarted_)
     stop();
 }
 
-
+/**
+ * 开启日志
+ */
 void Log::start() {
   isStarted_ = true;
   addLog("Server is start.");
   thread_.start();
 }
 
-
-
+/**
+ * 关闭日志
+ */
 void Log::stop() {
   isStarted_ = false;
   cond_.signal_all();
@@ -34,7 +35,11 @@ void Log::stop() {
 }
 
 
-// 添加日志 (producer)
+/**
+ * 添加日志至队列 (producer)
+ *
+ * @param s: 日志字符串
+ */
 void Log::addLog(const std::string &s) {
   MutexLockGuard lock(mutex_);
   queue_.push(s);
@@ -42,7 +47,11 @@ void Log::addLog(const std::string &s) {
 }
 
 
-// 获取日志 (consumer)
+/**
+ * 从队列获取日志 (consumer)
+ * 
+ * return 从日志队列中获取的一条日志
+ */
 std::string Log::getLog() {
   MutexLockGuard lock(mutex_);
   while(queue_.empty() && isStarted_)
@@ -55,7 +64,11 @@ std::string Log::getLog() {
   return res;
 }
 
-
+/**
+ * 写入日志文件
+ *
+ * @param s: 日志字符串
+ */
 void Log::writeLog(const std::string &s) {
   std::ofstream out;
   out.open(log_file_, std::ofstream::app);
@@ -66,8 +79,9 @@ void Log::writeLog(const std::string &s) {
   out.clear();
 }
 
-
-// 日志线程运行函数
+/**
+ * 日志线程运行函数
+ */
 void Log::run() {
   while(isStarted_) {
     std::string s = getLog();

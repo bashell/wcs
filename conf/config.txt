@@ -3,5 +3,4 @@ logFile=../log/log.txt
 enDict=../data/en_out.txt
 chDict=../data/ch_out.txt
 cacheFile=../data/cache.txt
-cacheNum=32
 updateFrequence=15

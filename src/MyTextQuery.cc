@@ -18,7 +18,9 @@ TextQuery::~TextQuery() {
   mysql_close(mysql_conn_ptr_);
 }
 
-
+/**
+ * 连接数据库
+ */
 void TextQuery::connectDB() {
   mysql_conn_ptr_ = mysql_init(nullptr);
   const char *server_host = info.SERVER_HOST.c_str();
@@ -36,7 +38,12 @@ void TextQuery::connectDB() {
   //std::cout << "Connect success" << std::endl;
 }
 
-
+/**
+ * 查询数据库
+ *
+ * @param input: 输入
+ * return 查询结果
+ */
 std::string TextQuery::queryDB(const std::string &input) {
   std::string result("");
   
@@ -49,7 +56,13 @@ std::string TextQuery::queryDB(const std::string &input) {
   return result;
 }
 
-
+/**
+ * 查Table1
+ *
+ * @param table_name1: 表1名称
+ * @param input: 输入
+ * return 在表1中找到返回true, 否则返回false
+ */
 bool TextQuery::queryTableOne(const std::string &table_name1, const std::string &input) {
   char sql_select[256];
   const char *table_name = table_name1.c_str();
@@ -74,7 +87,14 @@ bool TextQuery::queryTableOne(const std::string &table_name1, const std::string 
   return isFound;
 }
 
-
+/**
+ * 查Table2
+ * 
+ * @param table_name2: 表2名称
+ * @param input: 输入
+ * @param result: 查询结果
+ * return 表2能推荐出结果返回true; 否则返回false
+ */
 bool TextQuery::queryTableTwo(const std::string &table_name2, const std::string &input, std::string &result) {
   std::priority_queue<Word> pq;
   char sql_select[256];
@@ -88,7 +108,6 @@ bool TextQuery::queryTableTwo(const std::string &table_name2, const std::string 
 
   stringutils::utf8ToUint32(input, uvec);
   for(const auto item: uvec) {
-
     sprintf(sql_select, "SELECT word, distance, frequency FROM %s WHERE item = '%d';", table_name, item);
     res = mysql_query(mysql_conn_ptr_, sql_select);
     if(res != 0) {
@@ -116,13 +135,3 @@ bool TextQuery::queryTableTwo(const std::string &table_name2, const std::string 
   return isRecommended;
 }
 
-/*
-int main()
-{
-  TextQuery tq;
-  std::string str;
-  while(std::cin >> str)
-    std::cout << tq.queryDB(str) << std::endl;
-  return 0;
-}
-*/

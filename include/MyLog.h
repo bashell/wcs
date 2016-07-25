@@ -13,9 +13,9 @@ class Log {
   Log(const std::string &logFile);
   ~Log();
 
-  void start();  // 日志开启
-  void stop();   // 日志关闭
-  void addLog(const std::string &s);  // 添加日志
+  void start();  
+  void stop();   
+  void addLog(const std::string &s);
 
  private:
   Log(const Log&) = delete;
