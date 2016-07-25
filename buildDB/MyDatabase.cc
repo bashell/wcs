@@ -111,9 +111,11 @@ void MyDB::buildTableOne(const std::string &table_name1, const std::string &word
   int res;
   sprintf(sql_insert, "INSERT INTO %s VALUES('%s', '%d', '%d');", table_name, word_ptr, distance, frequency);
   res = mysql_query(mysql_conn_ptr_, sql_insert);
+  /*
   if(res != 0) {
     fprintf(stderr, "INSERT error %d: %s\n", mysql_errno(mysql_conn_ptr_), mysql_error(mysql_conn_ptr_));
   }
+  */
 }
 
 /**
@@ -132,8 +134,10 @@ void MyDB::buildTableTwo(const std::string &table_name2, uint32_t item, const st
   int res;
   sprintf(sql_insert, "INSERT INTO %s VALUES('%d', '%s', '%d', '%d');", table_name, item, word_ptr, distance, frequency);
   res = mysql_query(mysql_conn_ptr_, sql_insert);
+  /*
   if(res != 0) {
     fprintf(stderr, "INSERT error %d: %s\n", mysql_errno(mysql_conn_ptr_), mysql_error(mysql_conn_ptr_));
   }
+  */
 }
 

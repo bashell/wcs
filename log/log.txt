@@ -159,3 +159,81 @@ One pair is add to cache: aair -> air
 
 Client 127.0.0.1:43983 is offline.
 
+Server is start.
+Server is start.
+Client 127.0.0.1:44004 is online.
+
+Query request comes.
+
+One pair is add to cache: hello -> help
+
+Query request comes.
+
+One pair is add to cache: help -> help
+
+Query request comes.
+
+Search from cache: good -> good
+
+Query request comes.
+
+One pair is add to cache: hi -> he
+
+Query request comes.
+
+One pair is add to cache: he -> he
+
+Query request comes.
+
+One pair is add to cache: she -> she
+
+Query request comes.
+
+One pair is add to cache: her -> her
+
+Query request comes.
+
+One pair is add to cache: her -> her
+
+Query request comes.
+
+One pair is add to cache: 王 -> 王
+
+Query request comes.
+
+One pair is add to cache: 国王 -> 国王
+
+Query request comes.
+
+One pair is add to cache: 厉害 -> 厉害
+
+Query request comes.
+
+One pair is add to cache: 伸手 -> 伸手
+
+Query request comes.
+
+One pair is add to cache: 身手 -> 身手
+
+Query request comes.
+
+One pair is add to cache: heee -> here
+
+Query request comes.
+
+One pair is add to cache: mooon -> moon
+
+Query request comes.
+
+One pair is add to cache: goo -> go
+
+Query request comes.
+
+Search from cache: now -> now
+
+Query request comes.
+
+One pair is add to cache: wom -> whom
+
+Client 127.0.0.1:44004 is offline.
+

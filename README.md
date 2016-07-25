@@ -1,39 +1,57 @@
 # wcs
 单词纠错系统（Word Correction System）
 
-简介：wcs收到输入单词后，向客户端返回一个与之最相近的单词。
+简介：字符串的编辑距离可以用来表示字符串之间的相似度。如果一个单词拼写错误，那么可以根据编辑距离计算出与输入单词相似度最高的结果。系统接收用户输入任意单词，然后返回正确的结果供用户参考。
 
-### 基本原理
-字符串的编辑距离可以用来表示字符串之间的相似度。如果一个单词拼写错误，那么可以根据编辑距离去wcs中寻找与输入相似度最高的单词。
+### 系统框架
+rptp网络库 + Mysql + Cache
+- `rptp网络库`：封装了 ThreadPool 、定时器(Timerfd) 和 I/O mutiplexing。
+- `Mysql`：提供数据查询。
+- `Cache`：缓存最近的查询结果以减轻数据库的访问压力。
+- 整体思路：把TcpServer与ThreadPool结合，用户在回调函数中，把查询任务和数据回发任务封装成函数，交给线程池去处理。TcpServer所在的IO线程主要处理数据收发，线程池内的线程主要处理计算任务，计算过程中会访问Cache或Mysql数据库。
 
 ### 模块划分
 - **配置模块**
-	- 采用单例模式读取配置文件。
+	- 单例模式读取配置文件。
 - **预处理模块**
-	- 根据中英文语料建立词库，形式为：`单词 词频`。
-	- 中文分词使用“结巴”（cppjieba）。
-	- 中文编辑距离处理：将UTF8编码的汉字转为uint32_t型数组，然后对数组求编辑距离。
-- **网络框架**
-	- `rptp网络库`：封装了 ThreadPool 和 I/O mutiplexing。
-	- 整体思路：把TcpServer与ThreadPool结合，用户在回调函数中，把计算任务（查询服务）和数据回发的任务封装成函数，交给线程池去处理。TcpServer所在的IO线程主要处理数据收发，线程池内的线程主要处理计算任务。
+1. 处理中英文语料生成中英文词典文件，形式为：`单词 词频`。
+	- 对中文语料使用“结巴”分词(cppjieba)进行切词。
+2. 在Mysql中建立两张表（dictionary、dictionary_split），并将中英文词典文件内容写入两张表中
+    - dictionary: word(PRI) distance frequency
+    - dictionary_split:  item word(PRI) distance frequency
 - **缓存模块**
-	- 缓存池，内部封装多个cache。
-	- 线程每次查询前都必须向缓存池申请一个可用的cache，查询完毕后归还。
-	- 缓存池维持一个全局cache，归还cache的操作即将全局cache的副本加入到缓存池中。
-	- 与全局cache相关的还有一个定时器线程，每隔一段时间就会把全局cache的内容写回磁盘。
-
-- **索引模块**
-	- 为词库中的每个字（中文字或者英文字母）建立索引，根据输入的单词可得到索引范围，有效地减少了编辑距离的计算次数。
+	- 两个内存Cache：Master Cache用于写操作，Slave Cache用于读操作。它们由CacheManager类统一管理。
+	- 线程执行任务时先查询Slave Cache：若在缓存中找到待查询条目，则直接返回查询结果，否则查询数据库。两种情况最后都需将查询结果更新至Master Cache以体现LRU策略。
+	- 主从复制 + 定时回写：设立两个定时器线程，第一个定时器线程每隔一段时间会将Master Cache内容复制到Slave Cache中；第二个定时器线程每隔一段时间会Slave Cache中的内容写回磁盘cache文件。定时器触发的时间间隔可由手工指定。
 - **查询模块**
-	- 若输入单词在词库中找到，则直接返回。
-	- 若输入单词未在词库中找到，则计算最可能的结果：根据输入查索引表，得出索引范围，将索引范围内符合条件的单词加入到优先级队列中，返回优先级最高的单词。
+	- 若输入单词在缓存Cache中找到，则直接返回。
+	- 连接Mysql数据库进行查询：若输入单词在数据库dictionary table中，则直接返回；否则根据输入查询数据库dictionary_split table，得出一个结果集合，将集合中的每个单词同输入单词计算编辑距离，并将符合条件的单词放入优先级队列中，最终向用户返回优先级最高的单词。
 - **日志模块**
-	- producer-consumer模型。日志存于一个同步队列中，有一个线程专门负责向log文件写日志。
+	- producer-consumer模型。日志存于一个同步队列中，用一个线程专门负责向log文件写日志。
 - **工具模块**
-	- 封装文件I/O操作，编辑距离计算，string修剪。
+	- 封装文件I/O操作，字符串由UTF8编码向uint32\_t数组转换，编辑距离计算 和 string修剪。
 
 ### 使用方法
-1. 程序主目录下执行`make submake`
-2. 进入dict文件夹执行makeDict
-3. 退回主目录下执行`make`
-4. 进入bin文件夹后，运行server
+1. 登录Mysql，并在firstdb数据库下创建两个table
+```bash
+$ mysql> create table dictionary(
+      -> word VARCHAR(20) NOT NULL,
+      -> distance INT NOT NULL,
+      -> frequency INT NOT NULL,
+      -> PRIMARY KEY(word)
+      -> ) default charset=utf8;
+      
+$ mysql> create table dictionary_split(
+      -> item INT NOT NULL,
+      -> word VARCHAR(20) NOT NULL,
+      -> distance INT NOT NULL,
+      -> frequency INT NOT NULL,
+      -> PRIMARY KEY(word)
+      -> ) default charset=utf8;
+```
+2. 项目主目录下执行`make submake`
+3. 进入dict文件夹执行makeDict
+4. 进入buildDB文件夹执行build.sh后执行makeDB
+4. 回主目录下执行`make`
+5. 在bin文件夹运行server
+
