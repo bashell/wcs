@@ -49,9 +49,6 @@ $ mysql> create table dictionary_split(
       -> PRIMARY KEY(word)
       -> ) default charset=utf8;
 ```
-2. 项目主目录下执行`make submake`
-3. 进入dict文件夹执行makeDict
-4. 进入buildDB文件夹执行build.sh后执行makeDB
-4. 回主目录下执行`make`
-5. 在bin文件夹运行server
+2. ./wcs_build.sh
+3. 在bin文件夹运行server
 
