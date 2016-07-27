@@ -32,7 +32,7 @@ rptp网络库 + Mysql + Cache
 	- 封装文件I/O操作，字符串由UTF8编码向uint32\_t数组转换，编辑距离计算 和 string修剪。
 
 ### 使用方法
-1. 登录Mysql，并在firstdb数据库下创建两个table
+登录Mysql，并在firstdb数据库下创建两个table
 ```bash
 $ mysql> create table dictionary(
       -> word VARCHAR(20) NOT NULL,
@@ -49,6 +49,8 @@ $ mysql> create table dictionary_split(
       -> PRIMARY KEY(word)
       -> ) default charset=utf8;
 ```
-2. ./wcs_build.sh
-3. 在bin文件夹运行server
+
+./wcs_build.sh
+
+在bin文件夹运行server
 
