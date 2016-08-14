@@ -1,6 +1,0 @@
-port=8888
-logFile=../log/log.txt
-enDict=../data/en_out.txt
-chDict=../data/ch_out.txt
-cacheFile=../data/cache.txt
-updateFrequence=15
