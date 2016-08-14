@@ -5,10 +5,12 @@
 #include "MyCache.h"
 #include "StringUtils.h"
 
+using namespace mywcs;
 
 LruCache::LruCache() : maxSize_(DEFAULT_CACHE_SIZE) {}
 
 LruCache::~LruCache() {}
+
 
 /**
  * 读磁盘cache文件内容至内存cache
@@ -33,6 +35,7 @@ void LruCache::readCacheFile(const std::string &filename) {
   in.clear();
 }
 
+
 /**
  * 将内存cache内容回写磁盘cache文件
  *
@@ -47,6 +50,7 @@ void LruCache::writeCacheFile(const std::string &filename) {
   out.close();
   out.clear();
 }
+
 
 /**
  * 判断字符串key是否在cache中
@@ -65,6 +69,7 @@ bool LruCache::findIfInCache(const std::string &key, std::string &val) {
   }
 }
 
+
 /**
  * 用<key,val>更新cache
  *
@@ -73,9 +78,11 @@ bool LruCache::findIfInCache(const std::string &key, std::string &val) {
  */
 void LruCache::putIntoCache(const std::string &key, const std::string &val) {
   auto iter = cache_list_map_.find(key);
+
   // 未命中
   if(iter == cache_list_map_.end()) {  
-    if(cache_list_.size() == maxSize_) { // cache is full
+    // cache已满
+    if(cache_list_.size() == maxSize_) {
       cache_list_map_.erase(cache_list_.back().key_);
       cache_list_.pop_back();  // 删除cache_list_的最后一个Node
     }
@@ -86,8 +93,9 @@ void LruCache::putIntoCache(const std::string &key, const std::string &val) {
     new_node.val_ = val;
     cache_list_.push_front(new_node);
     cache_list_map_[key] = cache_list_.begin();
-    //std::cout << "aaa" << std::endl;
-  } 
+    //std::cout << "putIntoCache success!" << std::endl;
+  }
+
   // 命中
   else {  
     auto list_iterator = cache_list_map_[key];
@@ -103,12 +111,13 @@ void LruCache::putIntoCache(const std::string &key, const std::string &val) {
   }
 }
 
+
 /**
  * 将Master cache内容复制到Slave cache
  *
  * @param lru_c: cache副本
  */
-void LruCache::copyLruCache(const LruCache lru_c) {
+void LruCache::copyLruCache(const LruCache &lru_c) {
   cache_list_.clear();
   cache_list_map_.clear();
   //std::cout << lru_c.cache_list_.size() << std::endl;

@@ -6,6 +6,8 @@
 #include <fstream>
 #include "include/MixSegment.hpp"
 
+namespace mywcs
+{
 
 class MakeDictCh {
  public:
@@ -23,9 +25,10 @@ class MakeDictCh {
   std::ofstream &openFileWrite(std::ofstream &os, const std::string &filename);
  
  private:
-  cppjieba::MixSegment segment_;         // 用于分词
-  std::unordered_map<std::string, size_t> words_;  // 词典
+  cppjieba::MixSegment segment_;                   // cppjieba分词
+  std::unordered_map<std::string, size_t> words_;  // 中文词典
 };
 
+} // namespace mywcs
 
 #endif  /* _MAKE_DICT_CH_H_ */

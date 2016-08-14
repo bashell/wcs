@@ -12,4 +12,4 @@ $(BIN):$(OBJS)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	rm -rf *.o $(BIN)
+	rm -f *.o $(BIN)

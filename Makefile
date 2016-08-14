@@ -27,10 +27,12 @@ $(OBJ_PATH)/%.o:%.cc
 
 submake:
 	make -C ./rptp/
-	make -C ./dict/
+	make -C ./buildDict/
+	make -C ./buildDB/
 
 clean:
 	$(RM) $(INSTALL_PATH)/$(BIN)
 	$(RM) $(wildcard $(OBJ_DIR)/*)
 	make -C ./rptp/ clean
-	make -C ./dict/ clean
+	make -C ./buildDict/ clean
+	make -C ./buildDB/ clean

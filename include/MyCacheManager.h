@@ -9,6 +9,8 @@
 #include "TimerThread.h"
 #include "MyCache.h"
 
+namespace mywcs
+{
 
 class CacheManager {
  public:
@@ -38,5 +40,6 @@ class CacheManager {
   TimerThread timer_two_;         // 定时进行主/从cache复制
 };
 
+}  // namespace mywcs
 
 #endif  /* _MY_CACHE_MANAGER_H_ */

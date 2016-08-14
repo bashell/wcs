@@ -3,6 +3,9 @@
 
 #include <string>
 
+namespace mywcs
+{
+
 struct Word {
   Word(const std::string &word, uint32_t distance, uint32_t frequency)
       : word_(word), distance_(distance), frequency_(frequency) {}
@@ -19,9 +22,11 @@ struct Word {
       return false;
   }
   
-  std::string word_;  // 单词
+  std::string word_;       // 单词
   uint32_t distance_;      // 编辑距离
   uint32_t frequency_;     // 词频
 };
+
+}  // namespace mywcs
 
 #endif  /* _MY_WORD_H_ */

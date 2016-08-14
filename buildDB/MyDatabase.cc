@@ -4,14 +4,17 @@
 #include "MyDatabase.h"
 #include "StringUtils.h"
 
+using namespace mywcs;
 
-MyDB::MyDB(const std::string &enDictFile, const std::string &chDictFile)
-        : enDict_(enDictFile), chDict_(chDictFile), mysql_conn_ptr_(nullptr) {
+MyDB::MyDB(const std::string &enDictFile, const std::string &chDictFile, Configuration *config)
+        : MyInfo(config), enDict_(enDictFile), chDict_(chDictFile), mysql_conn_ptr_(NULL) 
+{
   connectDB();
 }
 
 
-MyDB::~MyDB() {
+MyDB::~MyDB() 
+{
   mysql_close(mysql_conn_ptr_);
 }
 
@@ -19,11 +22,11 @@ MyDB::~MyDB() {
  * 数据库连接
  */
 void MyDB::connectDB() {
-  mysql_conn_ptr_ = mysql_init(nullptr);
-  const char *server_host = info.SERVER_HOST.c_str();
-  const char *sql_user_name = info.SQL_USER_NAME.c_str();
-  const char *sql_password = info.SQL_PASSWORD.c_str();
-  const char *db_name = info.DB_NAME.c_str();
+  mysql_conn_ptr_ = mysql_init(NULL);
+  const char *server_host = SERVER_HOST.c_str();
+  const char *sql_user_name = SQL_USER_NAME.c_str();
+  const char *sql_password = SQL_PASSWORD.c_str();
+  const char *db_name = DB_NAME.c_str();
   if(!mysql_real_connect(mysql_conn_ptr_, server_host, sql_user_name, sql_password, db_name, 0, NULL, 0)) {
     fprintf(stderr, "Connection failed\n");
     if(mysql_error(mysql_conn_ptr_))
@@ -59,7 +62,7 @@ void MyDB::buildDictionaryOne(int flag) {
     std::string word;
     uint32_t freq;
     iss >> word >> freq;
-    buildTableOne(info.TABLE_ONE_NAME, word, DEFAULT_DISTANCE, freq);
+    buildTableOne(TABLE_ONE_NAME, word, DEFAULT_DISTANCE, freq);
   }
 }
 
@@ -91,7 +94,7 @@ void MyDB::buildDictionaryTwo(int flag) {
     iss >> word >> freq;
     stringutils::utf8ToUint32(word, uvec);
     for(const auto item : uvec) {
-      buildTableTwo(info.TABLE_TWO_NAME, item, word, DEFAULT_DISTANCE, freq);
+      buildTableTwo(TABLE_TWO_NAME, item, word, DEFAULT_DISTANCE, freq);
     }
   }
 }
@@ -108,9 +111,9 @@ void MyDB::buildTableOne(const std::string &table_name1, const std::string &word
   char sql_insert[256];
   const char *table_name = table_name1.c_str();
   const char *word_ptr = word.c_str();
-  int res;
+
   sprintf(sql_insert, "INSERT INTO %s VALUES('%s', '%d', '%d');", table_name, word_ptr, distance, frequency);
-  res = mysql_query(mysql_conn_ptr_, sql_insert);
+  mysql_query(mysql_conn_ptr_, sql_insert);
   /*
   if(res != 0) {
     fprintf(stderr, "INSERT error %d: %s\n", mysql_errno(mysql_conn_ptr_), mysql_error(mysql_conn_ptr_));
@@ -131,9 +134,9 @@ void MyDB::buildTableTwo(const std::string &table_name2, uint32_t item, const st
   char sql_insert[256];
   const char *table_name = table_name2.c_str();
   const char *word_ptr = word.c_str();
-  int res;
+
   sprintf(sql_insert, "INSERT INTO %s VALUES('%d', '%s', '%d', '%d');", table_name, item, word_ptr, distance, frequency);
-  res = mysql_query(mysql_conn_ptr_, sql_insert);
+  mysql_query(mysql_conn_ptr_, sql_insert);
   /*
   if(res != 0) {
     fprintf(stderr, "INSERT error %d: %s\n", mysql_errno(mysql_conn_ptr_), mysql_error(mysql_conn_ptr_));

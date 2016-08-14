@@ -1,6 +1,8 @@
 #include <iostream>
 #include "MyCacheManager.h"
 
+using namespace mywcs;
+
 
 CacheManager::CacheManager(const std::string &cacheFile, int updateFrequence)
     : cache_file_(cacheFile),
@@ -16,6 +18,7 @@ CacheManager::~CacheManager() {
     stop();
 }
 
+
 /**
  * 开启CacheManager
  */
@@ -29,19 +32,20 @@ void CacheManager::start() {
   timer_two_.startTimerThread();
 }
 
+
 /**
  * 关闭CacheManager
  */
 void CacheManager::stop() {
   if(isStarted_ == false) 
     return ;
-  {
-    MutexLockGuard lock(mutex_);
-    isStarted_ = false;
-    timer_one_.cancelTimerThread();
-    timer_two_.cancelTimerThread();
-  }
+  
+  MutexLockGuard lock(mutex_);
+  isStarted_ = false;
+  timer_one_.cancelTimerThread();
+  timer_two_.cancelTimerThread();
 }
+
 
 /**
  * 回写磁盘Cache File
@@ -51,6 +55,7 @@ void CacheManager::writeToFile() {
   slave_global_cache_.writeCacheFile(cache_file_);
 }
 
+
 /**
  * 主从Cache复制
  */
@@ -58,4 +63,5 @@ void CacheManager::copyMasterToSlave() {
   MutexLockGuard lock(mutex_);
   slave_global_cache_.copyLruCache(master_global_cache_);
 }
+
 

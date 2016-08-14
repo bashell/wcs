@@ -2,6 +2,7 @@
 #include <string.h>
 #include "StringUtils.h"
 
+
 /**
  * 打开文件并返回输入流
  *
@@ -16,6 +17,7 @@ std::ifstream &stringutils::openRead(std::ifstream &is, const std::string &filen
     std::cerr << "Can't open: " + filename << std::endl;;
   return is;
 }
+
 
 /**
  * 打开文件并返回输出流
@@ -34,7 +36,7 @@ std::ofstream &stringutils::openWrite(std::ofstream &os, const std::string &file
 
 
 /**
- * 计算utf-8编码所占字节数
+ * 计算utf-8编码的一个char所占字节数
  *
  * cnt_one = 0 ---> 1
  * cnt_one = 2 ---> 2
@@ -42,7 +44,7 @@ std::ofstream &stringutils::openWrite(std::ofstream &os, const std::string &file
  * ...
  *
  * @param c: 字符
- * return 字符c的utf8编码所占字节数
+ * @return 字符c的utf8编码所占字节数
  */
 inline int stringutils::utf8Len(char c) {
   int cnt_one = 0;
@@ -56,12 +58,12 @@ inline int stringutils::utf8Len(char c) {
  * 将utf-8编码的string转换成uint32_t数组
  *
  * 例如,若string s = "严肃", 则s中各成员的unsigned char版本对应的十六进制分别为: 
- * s[0] = e4, s[1] = b8, s[2] = a5, s[3] = e8, s[4] = 82, s[5] = 83
+ * s[0] = e4, s[1] = b8, s[2] = a5, s[3] = e8, s[4] = 82, s[5] = 83. 即
  * '严'的utf-8编码(十六进制)为 e4b8a5
  * '肃'的utf-8编码(十六进制)为 e88283
  *
  * @param s: 待转换字符串
- * @param vec: uint32_t结果数组
+ * @param vec: 结果数组
  */
 void stringutils::utf8ToUint32(const std::string &s, std::vector<uint32_t> &vec) {
   for(size_t i = 0; i != s.size(); ++i) {
@@ -87,17 +89,20 @@ void stringutils::utf8ToUint32(const std::string &s, std::vector<uint32_t> &vec)
   }
 }
 
+
 /**
  * 求三个整数的最小值
  *
  * @param a: int
  * @param b: int
  * @param c: int
+ * @return min of three int
  */
-int stringutils::myMin(int a, int b, int c) {
+inline int stringutils::myMin(int a, int b, int c) {
   int res = a < b ? a : b;
   return (res < c ? res : c);
 }
+
 
 /**
  * 编辑距离计算辅助函数
@@ -125,6 +130,7 @@ inline int stringutils::editDistanceHelper(const std::vector<uint32_t> &v1, cons
   return dp[len1][len2];
 }
 
+
 /**
  * 计算编辑距离
  *
@@ -139,17 +145,19 @@ int stringutils::editDistance(const std::string &s1, const std::string &s2) {
   return editDistanceHelper(v1, v2, v1.size(), v2.size());
 }
 
+
 /**
  * 截去字符串末尾的'\r\n'
  *
  * @param word: 输入字符串
  */
 void stringutils::trimSpace_rn(std::string &word) {
-  char tmp[512] = {0};
+  char tmp[LEN_FOR_TRIM] = {0};
   ::strcpy(tmp, word.c_str());
   tmp[::strlen(tmp)-2] = '\0';  // 去掉行尾\r\n
   word = static_cast<std::string>(tmp);
 }
+
 
 /**
  * 截去字符串末尾的'\n'
@@ -157,8 +165,10 @@ void stringutils::trimSpace_rn(std::string &word) {
  * @param word: 输入字符串
  */
 void stringutils::trimSpace_n(std::string &word) {
-  char tmp[512] = {0};
+  char tmp[LEN_FOR_TRIM] = {0};
   ::strcpy(tmp, word.c_str());
   tmp[::strlen(tmp)-1] = '\0';  // 去掉行尾\n
   word = static_cast<std::string>(tmp);
 }
+
+

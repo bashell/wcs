@@ -7,6 +7,8 @@
 #include "Condition.h"
 #include "Thread.h"
 
+namespace mywcs
+{
 
 class Log {
  public:
@@ -22,8 +24,11 @@ class Log {
   Log &operator=(const Log&) = delete;
   
   std::string getLog();
+  std::string addFormatTime(const std::string &s);
+
   void writeLog(const std::string &s);
   void run();
+
 
  private:
   std::string log_file_;
@@ -33,5 +38,7 @@ class Log {
   Condition cond_;
   Thread thread_;  // 负责日志的读取与写入
 };
+
+}  // namespace mywcs
 
 #endif  /* _MY_LOG_H_ */

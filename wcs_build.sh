@@ -2,13 +2,11 @@
 
 make submake
 
-cd dict
+cd buildDict
 
 ./makeDict
 
 cd ../buildDB
-
-./build.sh
 
 ./makeDB
 

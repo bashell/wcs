@@ -1,239 +1,87 @@
-Server is start.
-Client 127.0.0.1:43982 is online.
+2016-08-14|16-47-25 : Server is start.
+2016-08-14|16-47-39 : Client 127.0.0.1:44817 is online.
 
-Client 127.0.0.1:43983 is online.
+2016-08-14|16-47-46 : Cache hit! Search from cache: 无额不作 -> 无恶不作
 
-Client 127.0.0.1:43984 is online.
+2016-08-14|16-47-52 : Query DB! One pair is add to cache: 心狠手拉 -> 心狠手辣
 
-Query request comes.
+2016-08-14|16-48-09 : Query DB! One pair is add to cache: 知己知彼 -> 知己知彼
 
-One pair is add to cache: man -> man
+2016-08-14|16-48-15 : Query DB! One pair is add to cache: 知己知比 -> 知己知彼
 
-Query request comes.
+2016-08-14|16-48-26 : Cache hit! Search from cache: 剑术 -> 剑术
 
-One pair is add to cache: go -> go
+2016-08-14|16-48-36 : Cache hit! Search from cache: joyy -> joy
 
-Query request comes.
+2016-08-14|16-48-41 : Query DB! One pair is add to cache: ninne -> nine
 
-One pair is add to cache: now -> now
+2016-08-14|16-48-45 : Query DB! One pair is add to cache: teethh -> teeth
 
-Query request comes.
+2016-08-14|16-48-49 : Cache hit! Search from cache: mooon -> moon
 
-One pair is add to cache: 没有 -> 没有
+2016-08-14|16-48-50 : Query DB! One pair is add to cache: mon -> moon
 
-Query request comes.
+2016-08-14|16-48-55 : Query DB! One pair is add to cache: moneey -> money
 
-Search from cache: nine -> nine
+2016-08-14|16-48-58 : Query DB! One pair is add to cache: suun -> spun
 
-Query request comes.
+2016-08-14|16-49-00 : Cache hit! Search from cache: sun -> sun
 
-One pair is add to cache: 那边 -> 那边
+2016-08-14|16-49-01 : Query DB! One pair is add to cache: ssun -> spun
 
-Query request comes.
+2016-08-14|16-49-07 : Query DB! One pair is add to cache: quicck -> quick
 
-One pair is add to cache: 这边 -> 这边
+2016-08-14|16-49-21 : Query DB! One pair is add to cache: joy -> joy
 
-Query request comes.
+2016-08-14|16-49-26 : Cache hit! Search from cache: teeth -> teeth
 
-One pair is add to cache: 里面 -> 里面
+2016-08-14|16-49-29 : Cache hit! Search from cache: schhool -> school
 
-Query request comes.
+2016-08-14|16-49-31 : Cache hit! Search from cache: sschool -> school
 
-One pair is add to cache: 外面 -> 外面
+2016-08-14|16-49-34 : Query DB! One pair is add to cache: faather -> father
 
-Query request comes.
+2016-08-14|16-49-38 : Query DB! One pair is add to cache: mmathher -> matter
 
-One pair is add to cache: woman -> woman
+2016-08-14|16-49-42 : Query DB! One pair is add to cache: mattter -> matter
 
-Query request comes.
+2016-08-14|16-49-43 : Client 127.0.0.1:44817 is offline.
 
-One pair is add to cache: weman -> weak
+2016-08-14|16-50-31 : Client 127.0.0.1:44818 is online.
 
-Query request comes.
+2016-08-14|16-50-33 : Query DB! One pair is add to cache: again -> again
 
-One pair is add to cache: weak -> weak
+2016-08-14|16-50-37 : Query DB! One pair is add to cache: 再次 -> 再次
 
-Query request comes.
+2016-08-14|16-50-40 : Cache hit! Search from cache: 无敌 -> 无敌
 
-One pair is add to cache: wear -> wear
+2016-08-14|16-50-42 : Cache hit! Search from cache: 金庸 -> 金庸
 
-Query request comes.
+2016-08-14|16-50-43 : Query DB! One pair is add to cache: 晓说 -> 说
 
-One pair is add to cache: llive -> like
+2016-08-14|16-50-45 : Query DB! One pair is add to cache: 小说 -> 小说
 
-Query request comes.
+2016-08-14|16-50-49 : Query DB! One pair is add to cache: 客栈 -> 客栈
 
-One pair is add to cache: like -> like
+2016-08-14|16-50-51 : Query DB! One pair is add to cache: 客房 -> 客
 
-Query request comes.
+2016-08-14|16-50-53 : Query DB! One pair is add to cache: 客人 -> 客人
 
-Search from cache: life -> life
+2016-08-14|16-50-55 : Cache hit! Search from cache: 师傅 -> 师傅
 
-Query request comes.
+2016-08-14|16-50-56 : Cache hit! Search from cache: 徒弟 -> 徒弟
 
-One pair is add to cache: look -> look
+2016-08-14|16-50-58 : Cache hit! Search from cache: 师娘 -> 师娘
 
-Client 127.0.0.1:43984 is offline.
+2016-08-14|16-51-00 : Query DB! One pair is add to cache: 师妹 -> 师妹
 
-Query request comes.
+2016-08-14|16-51-05 : Query DB! One pair is add to cache: 师凶 -> 师父
 
-One pair is add to cache: ok -> ox
+2016-08-14|16-51-23 : Query DB! One pair is add to cache: 无与伦比 -> 无比
 
-Query request comes.
+2016-08-14|16-51-28 : Query DB! One pair is add to cache: 自豪 -> 自己
 
-One pair is add to cache: ox -> ox
+2016-08-14|16-51-31 : Query DB! One pair is add to cache: 字迹 -> 字迹
 
-Query request comes.
-
-One pair is add to cache: 清朝 -> 清楚
-
-Query request comes.
-
-One pair is add to cache: 剑术 -> 剑术
-
-Query request comes.
-
-One pair is add to cache: 大师 -> 大师
-
-Query request comes.
-
-One pair is add to cache: 徒弟 -> 徒弟
-
-Query request comes.
-
-One pair is add to cache: 师傅 -> 师傅
-
-Client 127.0.0.1:43982 is offline.
-
-Query request comes.
-
-One pair is add to cache: 人类 -> 人
-
-Query request comes.
-
-One pair is add to cache: 类比 -> 比
-
-Query request comes.
-
-One pair is add to cache: 类似 -> 类似
-
-Query request comes.
-
-One pair is add to cache: data -> day
-
-Query request comes.
-
-One pair is add to cache: day -> day
-
-Query request comes.
-
-One pair is add to cache: sun -> sun
-
-Query request comes.
-
-One pair is add to cache: moon -> moon
-
-Query request comes.
-
-One pair is add to cache: sky -> sky
-
-Query request comes.
-
-One pair is add to cache: air -> air
-
-Query request comes.
-
-One pair is add to cache: aiir -> air
-
-Query request comes.
-
-One pair is add to cache: bluue -> blue
-
-Query request comes.
-
-One pair is add to cache: bue -> blue
-
-Query request comes.
-
-One pair is add to cache: aair -> air
-
-Client 127.0.0.1:43983 is offline.
-
-Server is start.
-Server is start.
-Client 127.0.0.1:44004 is online.
-
-Query request comes.
-
-One pair is add to cache: hello -> help
-
-Query request comes.
-
-One pair is add to cache: help -> help
-
-Query request comes.
-
-Search from cache: good -> good
-
-Query request comes.
-
-One pair is add to cache: hi -> he
-
-Query request comes.
-
-One pair is add to cache: he -> he
-
-Query request comes.
-
-One pair is add to cache: she -> she
-
-Query request comes.
-
-One pair is add to cache: her -> her
-
-Query request comes.
-
-One pair is add to cache: her -> her
-
-Query request comes.
-
-One pair is add to cache: 王 -> 王
-
-Query request comes.
-
-One pair is add to cache: 国王 -> 国王
-
-Query request comes.
-
-One pair is add to cache: 厉害 -> 厉害
-
-Query request comes.
-
-One pair is add to cache: 伸手 -> 伸手
-
-Query request comes.
-
-One pair is add to cache: 身手 -> 身手
-
-Query request comes.
-
-One pair is add to cache: heee -> here
-
-Query request comes.
-
-One pair is add to cache: mooon -> moon
-
-Query request comes.
-
-One pair is add to cache: goo -> go
-
-Query request comes.
-
-Search from cache: now -> now
-
-Query request comes.
-
-One pair is add to cache: wom -> whom
-
-Client 127.0.0.1:44004 is offline.
+2016-08-14|16-51-32 : Client 127.0.0.1:44818 is offline.
 

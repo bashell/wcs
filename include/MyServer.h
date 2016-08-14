@@ -3,6 +3,8 @@
 
 #include <vector>
 #include <string>
+#include <unistd.h>
+
 #include "MyConfiguration.h"
 #include "MyLog.h"
 #include "MyCacheManager.h"
@@ -12,6 +14,11 @@
 #include "InetAddress.h"
 #include "TcpServer.h"
 
+// 线程池大小取为CPU核数
+#define THREAD_POOL_SIZE (sysconf(_SC_NPROCESSORS_CONF))
+
+namespace mywcs
+{
 
 class Server {
  public:
@@ -40,5 +47,6 @@ class Server {
   mutable MutexLock cache_mutex_;
 };
 
+}  // namespace mywcs
 
 #endif  /* _MY_SERVER_H_ */

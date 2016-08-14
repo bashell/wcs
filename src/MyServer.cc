@@ -2,29 +2,33 @@
 #include <sstream>
 #include <string>
 #include <functional>  // placesholders
+
 #include "MyServer.h"
 #include "StringUtils.h"
 
-using namespace std::placeholders;
+using namespace mywcs;
 
 Server::Server(Configuration *config)
     : addr_(config->getPort()),
       // 服务器模块初始化 
       server_(addr_),
       // 查询模块初始化
-      search_(),
+      search_(config->getServerHost(), config->getSqlUserName(),
+              config->getSqlPassword(), config->getDbName(),
+              config->getTableOneName(), config->getTableTwoName()),
       // 缓存模块初始化
       caches_(config->getCacheFile(), config->getUpdateFrequence()),
-      // 线程池模块初始化(池中线程个数一半等于CPU核数)
-      pool_(1000, 4),
+      // 线程池模块初始化
+      pool_(1000, THREAD_POOL_SIZE),
       // 日志模块初始化
       log_(config->getLogFile()) 
 {
   // 回调绑定
-  server_.setConnection(std::bind(&Server::connectCallback, this, _1));
-  server_.setMessage(std::bind(&Server::messageCallback, this, _1));
-  server_.setClose(std::bind(&Server::closeCallback, this, _1));
+  server_.setConnection(std::bind(&Server::connectCallback, this, std::placeholders::_1));
+  server_.setMessage(std::bind(&Server::messageCallback, this, std::placeholders::_1));
+  server_.setClose(std::bind(&Server::closeCallback, this, std::placeholders::_1));
 }
+
 
 Server::~Server() {
   // 关闭线程池
@@ -35,8 +39,9 @@ Server::~Server() {
   log_.stop();
 }
 
+
 /**
- * 开启服务
+ * 服务开启
  */
 void Server::start() {
   // 日志启动
@@ -49,10 +54,11 @@ void Server::start() {
   server_.start();
 }
 
+
 /**
  * 连接到来时的回调
  * 
- * @param conn: Tcp连接
+ * @param conn: Tcp连接请求
  */
 void Server::connectCallback(const TcpConnectionPtr &conn) {
   std::ostringstream oss;
@@ -64,10 +70,11 @@ void Server::connectCallback(const TcpConnectionPtr &conn) {
   conn->send("Please input a word to query:\r\n");
 }
 
+
 /**
  * 消息处理的回调
  *
- * @param conn: Tcp连接
+ * @param conn: Tcp连接请求
  */
 void Server::messageCallback(const TcpConnectionPtr &conn) {
   std::string word = conn->receive();
@@ -82,10 +89,11 @@ void Server::messageCallback(const TcpConnectionPtr &conn) {
   pool_.addTask(std::bind(&Server::compute, this, word, caches_.getSlaveGlobalCache(), conn));  // 查Slave Cache
 }
 
+
 /**
  * 连接关闭时的回调
  *
- * @param conn: Tcp连接
+ * @param conn: Tcp连接请求
  */
 void Server::closeCallback(const TcpConnectionPtr &conn) {
   std::ostringstream oss;
@@ -96,8 +104,9 @@ void Server::closeCallback(const TcpConnectionPtr &conn) {
   log_.addLog(log_message);
 }
 
+
 /**
- * 真正的消息处理过程
+ * 消息处理过程
  *
  * @param word: 接收到的单词
  * @param cache_ptr: 指向内存cache的指针
@@ -105,9 +114,6 @@ void Server::closeCallback(const TcpConnectionPtr &conn) {
  */
 void Server::compute(const std::string &word, LruCache *cache_ptr, const TcpConnectionPtr &conn) {
   std::ostringstream oss;
-  oss << "Query request comes." << std::endl;
-  log_.addLog(oss.str());
-  oss.str("");
 
   /*
    * 1. cache命中
@@ -120,7 +126,7 @@ void Server::compute(const std::string &word, LruCache *cache_ptr, const TcpConn
       MutexLockGuard lock(cache_mutex_);
       caches_.getMasterGlobalCache()->putIntoCache(word, val);  // 更新Master Cache
     }
-    oss << "Search from cache: " << word << " -> " << val << std::endl;
+    oss << "Cache hit! Search from cache: " << word << " -> " << val << std::endl;
     log_.addLog(oss.str());
     oss.str("");
   }
@@ -136,9 +142,10 @@ void Server::compute(const std::string &word, LruCache *cache_ptr, const TcpConn
       MutexLockGuard lock(cache_mutex_);
       caches_.getMasterGlobalCache()->putIntoCache(word, result);  // 更新Master Cache
     }
-    oss << "One pair is add to cache: " << word << " -> " << result << std::endl;
+    oss << "Query DB! One pair is add to cache: " << word << " -> " << result << std::endl;
     log_.addLog(oss.str());
     oss.str("");
   }
 }
+
 

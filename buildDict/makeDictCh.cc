@@ -2,16 +2,17 @@
 #include <sstream>
 #include "makeDictCh.h"
 
+using namespace mywcs;
 
 MakeDictCh::MakeDictCh(const std::string &dict_path, const std::string &hmm_path)
     : segment_(dict_path, hmm_path)
 {}
 
-MakeDictCh::~MakeDictCh() {
-}
+MakeDictCh::~MakeDictCh() {}
+
 
 /**
- * 读取中文词库文件并构建词典
+ * 读取中文语料并构建中文词典
  *
  * @param filename: 文件名
  */
@@ -30,6 +31,7 @@ void MakeDictCh::readFile(const std::string &filename) {
   in.clear();
 }
 
+
 /**
  * 回写磁盘文件
  *
@@ -45,11 +47,13 @@ void MakeDictCh::writeFile(const std::string &filename) {
   out.clear();
 }
 
+
 /**
  * 打开文件并返回输入流
  *
  * @param is: 输入流
  * @param filename: 文件名
+ * @return 输入流
  */
 std::ifstream &MakeDictCh::openFileRead(std::ifstream &is, const std::string &filename) {
   is.close();
@@ -58,11 +62,13 @@ std::ifstream &MakeDictCh::openFileRead(std::ifstream &is, const std::string &fi
   return is;
 }
 
+
 /**
  * 打开文件并返回输出流
  *
  * @param os: 输出流
  * @param filename: 文件名
+ * @return 输出流
  */
 std::ofstream &MakeDictCh::openFileWrite(std::ofstream &os, const std::string &filename) {
   os.close();
@@ -70,3 +76,4 @@ std::ofstream &MakeDictCh::openFileWrite(std::ofstream &os, const std::string &f
   os.open(filename.c_str());
   return os;
 }
+

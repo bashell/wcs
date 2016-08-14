@@ -5,6 +5,8 @@
 #include <fstream>
 #include <unordered_map>
 
+namespace mywcs
+{
 
 class MakeDictEn {
  public:
@@ -22,8 +24,9 @@ class MakeDictEn {
   std::ofstream &openFileWrite(std::ofstream &os, const std::string &filename);
 
  private:
-  std::unordered_map<std::string, size_t> words_;  // 词典
+  std::unordered_map<std::string, size_t> words_;  // 英文词典
 };
 
+}  // namespace mywcs
 
 #endif  /* _MAKE_DICT_EN_H_ */

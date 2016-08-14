@@ -1,7 +1,11 @@
 #include <iostream>
 #include <fstream>
 #include <functional>  // bind
+#include <time.h>
+
 #include "MyLog.h"
+
+using namespace mywcs;
 
 
 Log::Log(const std::string &logFile)
@@ -11,10 +15,12 @@ Log::Log(const std::string &logFile)
       thread_(std::bind(&Log::run, this)) 
 {}
 
+
 Log::~Log() {
   if(isStarted_)
     stop();
 }
+
 
 /**
  * 开启日志
@@ -24,6 +30,7 @@ void Log::start() {
   addLog("Server is start.");
   thread_.start();
 }
+
 
 /**
  * 关闭日志
@@ -42,7 +49,7 @@ void Log::stop() {
  */
 void Log::addLog(const std::string &s) {
   MutexLockGuard lock(mutex_);
-  queue_.push(s);
+  queue_.push(addFormatTime(s));
   cond_.signal_one();
 }
 
@@ -50,7 +57,7 @@ void Log::addLog(const std::string &s) {
 /**
  * 从队列获取日志 (consumer)
  * 
- * return 从日志队列中获取的一条日志
+ * @return 一条日志
  */
 std::string Log::getLog() {
   MutexLockGuard lock(mutex_);
@@ -62,6 +69,19 @@ std::string Log::getLog() {
     queue_.pop();
   }
   return res;
+}
+
+
+/**
+ * 添加格式化时间
+ *
+ * @param s: 日志信息
+ */
+std::string Log::addFormatTime(const std::string &s) {
+  char ch[64];
+  time_t m_time = time(NULL);
+  strftime(ch, sizeof(ch), "%Y-%m-%d|%H-%M-%S : ", localtime(&m_time));
+  return std::string(ch) + s;
 }
 
 /**
@@ -79,6 +99,7 @@ void Log::writeLog(const std::string &s) {
   out.clear();
 }
 
+
 /**
  * 日志线程运行函数
  */
@@ -88,6 +109,7 @@ void Log::run() {
     if(s.size() > 0)
       writeLog(s);
   }
-  writeLog("Server is closed.");
+  writeLog(addFormatTime("Server is closed."));
 }
+
 
