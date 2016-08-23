@@ -6,7 +6,7 @@ cacheFile=../data/cache.txt
 updateFrequence=15
 
 server_host=localhost
-sql_user_name=bashell
+sql_user_name=root
 sql_password=1234
 db_name=firstdb
 table_one_name=dictionary
