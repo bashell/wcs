@@ -63,6 +63,12 @@ sql_user_name=root  // 登录帐号
 sql_password=1234   // 密码
 ```
 
-- ./wcs_build.sh
+- 系统建立 
+```bash
+*/wcs$ ./wcs_build.sh
+```
 
-- 在bin文件夹运行server
+- 进入bin文件夹下运行server
+```bash
+*/bin$ ./server
+```
