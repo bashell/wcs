@@ -38,6 +38,7 @@ $ sudo apt-get update;
 $ sudo apt-get install mysql-server;
 $ sudo apt-get install libmysqlclient-dev;
 ```
+
 - 登录Mysql，并在firstdb数据库下创建两个table
 ```bash
 $ mysql> create table dictionary(
@@ -54,6 +55,12 @@ $ mysql> create table dictionary_split(
       -> frequency INT NOT NULL,
       -> PRIMARY KEY(word)
       -> ) default charset=utf8;
+```
+
+- 修改conf文件夹下的配置文件config, 以配置Mysql帐号和密码
+```bash
+sql_user_name=root  // 登录帐号
+sql_password=1234   // 密码
 ```
 
 - ./wcs_build.sh
