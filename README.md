@@ -14,11 +14,11 @@ rptp网络库 + Mysql + Cache
 - **配置模块**
 	- 单例模式读取配置文件。
 - **预处理模块**
-1. 处理中英文语料生成中英文词典文件，形式为：`单词 词频`。
-	- 对中文语料使用“结巴”分词(cppjieba)进行切词。
-2. 在Mysql中建立两张表（dictionary、dictionary_split），并将中英文词典文件内容写入两张表中
-    - dictionary: word(PRI) distance frequency
-    - dictionary_split:  item word(PRI) distance frequency
+    - 处理中英文语料生成中英文词典文件，形式为：`单词 词频`。
+	    - 对中文语料使用“结巴”分词(cppjieba)进行切词。
+    - 在Mysql中建立两张表（dictionary、dictionary_split），并将中英文词典文件内容写入两张表中
+        - dictionary: word(PRI) distance frequency
+        - dictionary_split:  item(PRI) word distance frequency
 - **缓存模块**
 	- 两个内存Cache：Master Cache用于写操作，Slave Cache用于读操作。它们由CacheManager类统一管理。
 	- 线程执行任务时先查询Slave Cache：若在缓存中找到待查询条目，则直接返回查询结果，否则查询数据库。两种情况最后都需将查询结果更新至Master Cache以体现LRU策略。
@@ -32,7 +32,7 @@ rptp网络库 + Mysql + Cache
 	- 封装文件I/O操作，字符串由UTF8编码向uint32\_t数组转换，编辑距离计算 和 string修剪。
 
 ### 使用方法
-登录Mysql，并在firstdb数据库下创建两个table
+- 登录Mysql，并在firstdb数据库下创建两个table
 ```bash
 $ mysql> create table dictionary(
       -> word VARCHAR(20) NOT NULL,
@@ -46,11 +46,11 @@ $ mysql> create table dictionary_split(
       -> word VARCHAR(20) NOT NULL,
       -> distance INT NOT NULL,
       -> frequency INT NOT NULL,
-      -> PRIMARY KEY(word)
+      -> PRIMARY KEY(item)
       -> ) default charset=utf8;
 ```
 
-./wcs_build.sh
+- ./wcs_build.sh
 
-在bin文件夹运行server
+- 在bin文件夹运行server
 
