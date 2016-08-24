@@ -53,7 +53,8 @@ $ mysql> create table dictionary_split(
       -> word VARCHAR(20) NOT NULL,
       -> distance INT NOT NULL,
       -> frequency INT NOT NULL,
-      -> PRIMARY KEY(word)
+      -> PRIMARY KEY(word),
+      -> INDEX (item)
       -> ) default charset=utf8;
 ```
 

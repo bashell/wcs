@@ -72,7 +72,7 @@ void MyDB::buildDictionaryOne(int flag) {
  * 表1
  * | Field     | Type        | Null | Key |
  * ----------------------------------------
- * | item      | int(11)     | NO   |     |
+ * | item      | int(11)     | NO   | MUL |
  * | word      | varchar(20) | NO   | PRI |
  * | distance  | int(11)     | NO   |     |
  * | frequency | int(11)     | NO   |     |
